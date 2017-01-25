@@ -147,6 +147,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="EventHandler.cpp" />
+    <ClCompile Include="InOutLayer.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +157,9 @@
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Events.h" />
     <ClInclude Include="IComponent.h" />
+    <ClInclude Include="ILayer.h" />
+    <ClInclude Include="InOutLayer.h" />
+    <ClInclude Include="ISystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
