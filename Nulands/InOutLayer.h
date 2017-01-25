@@ -5,8 +5,13 @@
 class InOutLayer : public ILayer
 {
 public:
-	void update() override
-	{}
+	InOutLayer()
+	{
+		registerFunc(this, &InOutLayer::onTextOutput);
+	}
+	void update() override;
 private:
+	void onTextOutput(const Events::TextOutputEvent*);
 	void print(const std::string&);
+	static const int m_txtWidth;
 };

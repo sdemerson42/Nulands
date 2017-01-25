@@ -5,7 +5,7 @@
 #include <typeindex>
 
 #include "AutoList.h"
-#include "EventBase.h"
+#include "Events.h"
 
 template<typename T, typename EventT>
 using MFunc = void (T::*)(const EventT*);

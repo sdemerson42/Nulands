@@ -149,6 +149,7 @@
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="InOutLayer.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="WorldLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoList.h" />
@@ -160,6 +161,7 @@
     <ClInclude Include="ILayer.h" />
     <ClInclude Include="InOutLayer.h" />
     <ClInclude Include="ISystem.h" />
+    <ClInclude Include="WorldLayer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
