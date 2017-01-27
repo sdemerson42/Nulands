@@ -10,7 +10,8 @@ void InOutLayer::update()
 {
 	cout << ">";
 	string in;
-	cin >> in;
+	getline(cin, in);
+	if (in == "exit") setLayerState(false);
 	Events::PlayerCommandEvent pce{ in };
 	broadcast(&pce);
 }
@@ -31,9 +32,7 @@ void InOutLayer::print(const std::string& s)
 		os += s[i];
 		++i;
 		if (i % m_txtWidth == 0 && spcIndex != 0)
-		{
 			os[spcIndex] = '\n';
-		}
 	}
 	cout << os << endl;
 }
