@@ -36,6 +36,5 @@ namespace Events
 	private:
 		std::string m_cmd;
 	};
-	
 
 };

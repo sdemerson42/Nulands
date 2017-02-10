@@ -6,6 +6,7 @@
 
 #include "EventHandler.h"
 #include "IComponent.h"
+#include "GTypes.h"
 
 class Entity: public EventHandler, public AutoList<Entity>
 {
@@ -17,7 +18,7 @@ public:
 	}
 	virtual ~Entity()
 	{}
-	unsigned long long guid() const
+	GTypes::EntityGuid guid() const
 	{
 		return m_guid;
 	}
@@ -33,6 +34,13 @@ public:
 		if (it == m_component.end()) return nullptr;
 		return it->get();
 	}
+	template<typename Comp>
+	bool hasComponent()
+	{
+		auto it = std::find_if(m_component.begin(), m_component.end(), [](std::shared_ptr<IComponent>& sp) { return typeid(*sp.get()) == typeid(Comp); });
+		if (it == m_component.end()) return false;
+		return true;
+	}
 	void update()
 	{
 		for (auto& p : m_component)
@@ -40,8 +48,8 @@ public:
 	}
 private:
 	std::vector<std::shared_ptr<IComponent>> m_component;
-	unsigned long long m_guid;
-	static unsigned long long m_guidCounter;
+	GTypes::EntityGuid m_guid;
+	static GTypes::EntityGuid m_guidCounter;
 };
 
-unsigned long long Entity::m_guidCounter = 0;
+GTypes::EntityGuid Entity::m_guidCounter = 0;

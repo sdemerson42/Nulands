@@ -3,9 +3,9 @@
 using namespace std;
 
 
-
 int main()
 {
+
 	
 	
 	_getch();

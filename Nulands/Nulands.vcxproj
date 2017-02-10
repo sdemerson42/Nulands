@@ -146,6 +146,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ComponentPlayer.cpp" />
     <ClCompile Include="EventHandler.cpp" />
     <ClCompile Include="InOutLayer.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -153,10 +154,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AutoList.h" />
+    <ClInclude Include="ComponentPlayer.h" />
+    <ClInclude Include="ComponentRoom.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventBase.h" />
     <ClInclude Include="EventHandler.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="GTypes.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="ILayer.h" />
     <ClInclude Include="InOutLayer.h" />
