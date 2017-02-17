@@ -7,7 +7,11 @@ class InOutLayer : public ILayer
 public:
 	InOutLayer()
 	{
-		registerFunc(this, &InOutLayer::onTextOutput);
+		eventManager.registerFunc(this, &InOutLayer::onTextOutput);
+	}
+	~InOutLayer()
+	{
+		eventManager.unregisterListener(this);
 	}
 	void update() override;
 private:

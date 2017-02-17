@@ -7,5 +7,5 @@ void WorldLayer::onPlayerCommand(const Events::PlayerCommandEvent* evnt)
 	s += "WorldLayer has received a command: ";
 	s += evnt->cmd();
 	Events::TextOutputEvent toe{ s };
-	broadcast(&toe);
+	eventManager.broadcast(&toe);
 }

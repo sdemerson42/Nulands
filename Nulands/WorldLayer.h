@@ -7,7 +7,11 @@ class WorldLayer : public ILayer
 public:
 	WorldLayer()
 	{
-		registerFunc(this, &WorldLayer::onPlayerCommand);
+		eventManager.registerFunc(this, &WorldLayer::onPlayerCommand);
+	}
+	~WorldLayer()
+	{
+		eventManager.unregisterListener(this);
 	}
 	void update() override
 	{}

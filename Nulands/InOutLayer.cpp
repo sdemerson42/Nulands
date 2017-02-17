@@ -13,7 +13,7 @@ void InOutLayer::update()
 	getline(cin, in);
 	if (in == "exit") setLayerState(false);
 	Events::PlayerCommandEvent pce{ in };
-	broadcast(&pce);
+	eventManager.broadcast(&pce);
 }
 
 void InOutLayer::onTextOutput(const Events::TextOutputEvent* evnt)

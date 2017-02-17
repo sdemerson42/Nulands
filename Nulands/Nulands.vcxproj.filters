@@ -18,16 +18,13 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="EventHandler.cpp">
+    <ClCompile Include="WorldLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InOutLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="WorldLayer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ComponentPlayer.cpp">
+    <ClCompile Include="EventManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -36,9 +33,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="EventBase.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="EventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Events.h">
@@ -56,19 +50,16 @@
     <ClInclude Include="ISystem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InOutLayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="WorldLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentPlayer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="ComponentRoom.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GTypes.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InOutLayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
