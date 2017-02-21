@@ -1,6 +1,7 @@
 #pragma once
 
-#include "EventHandler.h"
+#include "EventManager.h"
+#include "AutoList.h"
 
 class Entity;
 
@@ -13,7 +14,6 @@ public:
 	virtual ~IComponent()
 	{}
 	virtual void update() = 0;
-protected:
 	Entity *getParent() const
 	{
 		return m_parentEntity;

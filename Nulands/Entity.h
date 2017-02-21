@@ -4,9 +4,10 @@
 #include <memory>
 #include <algorithm>
 
-#include "EventHandler.h"
+#include "EventManager.h"
 #include "IComponent.h"
 #include "GTypes.h"
+#include "SFML\Graphics.hpp"
 
 class Entity: public EventHandler, public AutoList<Entity>
 {
@@ -15,6 +16,12 @@ public:
 	{
 		m_guid = m_guidCounter;
 		++m_guidCounter;
+	}
+	Entity(float x, float y) :
+		Entity{}
+	{
+		m_position.x = x;
+		m_position.y = y;
 	}
 	virtual ~Entity()
 	{}
@@ -41,6 +48,15 @@ public:
 		if (it == m_component.end()) return false;
 		return true;
 	}
+	const sf::Vector2f &position() const
+	{
+		return m_position;
+	}
+	void setPosition(const sf::Vector2f &pos)
+	{
+		m_position.x = pos.x;
+		m_position.y = pos.y;
+	}
 	void update()
 	{
 		for (auto& p : m_component)
@@ -49,7 +65,7 @@ public:
 private:
 	std::vector<std::shared_ptr<IComponent>> m_component;
 	GTypes::EntityGuid m_guid;
+	sf::Vector2f m_position;
 	static GTypes::EntityGuid m_guidCounter;
 };
 
-GTypes::EntityGuid Entity::m_guidCounter = 0;
