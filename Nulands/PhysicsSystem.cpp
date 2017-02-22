@@ -7,7 +7,8 @@ void PhysicsSystem::update()
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
 		m_pc = AutoList<PhysicsComponent>::get(i);
-		move();
+		if (!m_pc->isStatic())
+			move();
 	}
 }
 

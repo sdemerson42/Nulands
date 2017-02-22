@@ -12,6 +12,7 @@ private:
 	const float m_gravity = 0.05f;
 	const float m_maxVelocity = 10.0f;
 	PhysicsComponent *m_pc;
+
 	void move();
 	void applyGravity();
 	void collisionX();
@@ -19,3 +20,4 @@ private:
 	void applyForce(float, float);
 	float constrainToMax(float);
 };
+
