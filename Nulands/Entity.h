@@ -57,6 +57,16 @@ public:
 		m_position.x = pos.x;
 		m_position.y = pos.y;
 	}
+	void setPosition(float x, float y)
+	{
+		m_position.x = x;
+		m_position.y = y;
+	}
+	void addPosition(float x, float y)
+	{
+		m_position.x += x;
+		m_position.y += y;
+	}
 	void update()
 	{
 		for (auto& p : m_component)

@@ -16,7 +16,9 @@ public:
 private:
 	std::vector<std::shared_ptr<Entity>> m_entityVec;
 	std::vector<std::shared_ptr<ISystem>> m_systemVec;
+	std::vector<std::shared_ptr<ISystem>> m_fixedSystemVec;
 	sf::RenderWindow m_window;
 	sf::Clock m_clock;
-	float m_elapsed{ 0 };
+	float m_deltaTime{ 0.0f };
+	const float m_frameRate{ 60.0f };
 };
