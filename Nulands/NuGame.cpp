@@ -12,10 +12,11 @@
 #include <iostream>
 
 NuGame::NuGame() :
-	m_window{ sf::VideoMode{800,600}, "NuGame" }
+	m_window{ sf::VideoMode{800, 600}, "NuGame" }
 {
 	m_systemVec.push_back(std::make_shared<RenderSystem>(&m_window));
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
+
 
 	m_clock.restart();
 }

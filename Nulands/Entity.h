@@ -35,11 +35,11 @@ public:
 		m_component.push_back(std::make_shared<Comp>(args...));
 	}
 	template<typename Comp>
-	IComponent* getComponent()
+	Comp* getComponent()
 	{
 		auto it = std::find_if(m_component.begin(), m_component.end(), [](std::shared_ptr<IComponent>& sp) { return typeid(*sp.get()) == typeid(Comp); });
 		if (it == m_component.end()) return nullptr;
-		return it->get();
+		return static_cast<Comp *>(it->get());
 	}
 	template<typename Comp>
 	bool hasComponent()

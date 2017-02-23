@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ISystem.h"
+#include "GTypes.h"
 
 class PhysicsComponent;
 class QuadTree;
@@ -15,13 +16,11 @@ private:
 	QuadTree *m_qt;
 	void adjustForces(PhysicsComponent *);
 	void applyGravity(PhysicsComponent *);
-	bool collisionX(PhysicsComponent *, PhysicsComponent *);
-	bool collisionY(PhysicsComponent *, PhysicsComponent *);
-	bool collide(PhysicsComponent *, PhysicsComponent *);
+	bool collisionX(PhysicsComponent *, PhysicsComponent *, float);
+	bool collisionY(PhysicsComponent *, PhysicsComponent *, float);
+	bool collide(const GTypes::Rect &, const GTypes::Rect &);
 	void applyForce(PhysicsComponent *, float, float);
 	float constrainToMax(float);
 	void checkCollisions();
-	float m_curXm;
-	float m_curYm;
 };
 
