@@ -157,6 +157,7 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="NuGame.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,7 @@
     <ClInclude Include="NuGame.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
   </ItemGroup>

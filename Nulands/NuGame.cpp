@@ -17,17 +17,6 @@ NuGame::NuGame() :
 	m_systemVec.push_back(std::make_shared<RenderSystem>(&m_window));
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
 
-	m_entityVec.push_back(std::make_shared<Entity>());
-	m_entityVec[0]->addComponent<RenderComponent>(m_entityVec[0].get(), "Squares.png", sf::Vector2f{ 0.0f, 0.0f }, sf::Vector2f{ 32.0f, 32.0f });
-	m_entityVec[0]->addComponent<PhysicsComponent>(m_entityVec[0].get(), 0, 0, 32, 32, true, true);
-
-	m_entityVec.push_back(std::make_shared<Entity>());
-	m_entityVec[1]->addComponent<RenderComponent>(m_entityVec[1].get(), "Squares.png", sf::Vector2f{ 32.0f, 0.0f }, sf::Vector2f{ 32.0f, 32.0f });
-	m_entityVec[1]->addComponent<PhysicsComponent>(m_entityVec[1].get(), 0, 0, 32, 32, false, true, true);
-	m_entityVec[1]->setPosition(0.0f, 400.0f);
-
-
-
 	m_clock.restart();
 }
 
