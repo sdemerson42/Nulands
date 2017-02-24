@@ -14,6 +14,9 @@ public:
 	RenderComponent(Entity *parent, const std::string &fName, sf::Vector2f &texCoord, const sf::Vector2f &texSize) :
 		IComponent{ parent }, m_fName{ fName }, m_texCoord { texCoord }, m_texSize{ texSize }
 	{}
+	RenderComponent(Entity *parent, const std::string &fName, float x, float y, float w, float h) :
+		IComponent{ parent }, m_fName{ fName }, m_texCoord{ x,y }, m_texSize{ w,h }
+	{}
 	void update() override
 	{}
 	const sf::Vector2f &texCoord() const

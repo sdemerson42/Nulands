@@ -1,7 +1,7 @@
 #include <conio.h>
 #include <time.h>
 
-#include "NuGame.h"
+#include "NuScene.h"
 
 using namespace std;
 
@@ -9,7 +9,7 @@ using namespace std;
 int main()
 {	
 	srand(time(NULL));
-	NuGame *ng = new NuGame;
+	NuScene *ng = new NuScene;
 
 	while (true)
 		ng->update();

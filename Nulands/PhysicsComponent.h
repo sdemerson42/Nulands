@@ -8,8 +8,10 @@
 class PhysicsComponent : public IComponent, public AutoList<PhysicsComponent>
 {
 public:
-	PhysicsComponent(Entity *parent, float px, float py, float w, float h, bool usesGravity = false, bool solid = false, bool isStatic = false) :
-		IComponent{ parent }, m_collisionBox{ px, py, w, h }, m_usesGravity{ usesGravity }, m_solid{ solid }, m_static{ isStatic }
+	PhysicsComponent(Entity *parent, float px, float py, float w, float h, bool usesGravity = false, bool solid = false, bool isStatic = false, 
+		float momentumX = 0.0f, float momentumY = 0.0f) :
+		IComponent{ parent }, m_collisionBox{ px, py, w, h }, m_usesGravity{ usesGravity }, m_solid{ solid }, m_static{ isStatic },
+		m_momentum{ momentumX, momentumY }
 	{}
 	void update() override
 	{}
@@ -43,5 +45,5 @@ private:
 	bool m_usesGravity{ false };
 	bool m_solid{ false };
 	bool m_static{ false };
-	sf::Vector2f m_momentum{ 0,0 };
+	sf::Vector2f m_momentum;
 };

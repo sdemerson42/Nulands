@@ -154,8 +154,9 @@
   <ItemGroup>
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventManager.cpp" />
+    <ClCompile Include="Factory.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="NuGame.cpp" />
+    <ClCompile Include="NuScene.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
@@ -166,10 +167,11 @@
     <ClInclude Include="EventBase.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="Events.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="GTypes.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="ISystem.h" />
-    <ClInclude Include="NuGame.h" />
+    <ClInclude Include="NuScene.h" />
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="QuadTree.h" />
