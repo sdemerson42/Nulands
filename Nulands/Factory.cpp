@@ -1,29 +1,81 @@
 #include "Factory.h"
-
 #include "Entity.h"
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
 
+#define addC(T, ...) addComponent<##T>(__VA_ARGS__)
 
-void Factory::construct(std::vector<std::shared_ptr<Entity>> &v, EType e, float x, float y)
+std::istream &operator >> (std::istream &ist, CompData & cd)
 {
-	v.push_back(std::make_shared<Entity>());
-	auto p = v[v.size() - 1].get();
-	switch (e)
+	char c;
+	if (!(ist >> c) || c != '{')
 	{
-	case EType::TestBox:
+		ist.putback(c);
+		ist.clear(std::ios_base::failbit);
+		return ist;
+	}
+	
+	std::string cdType;
+	ist >> cdType;
+	cd.type = cdType;
+
+	while (true)
 	{
-		p->addComponent<RenderComponent>(p, "Squares.png", 0, 0, 32, 32);
-		p->addComponent<PhysicsComponent>(p, 2, 2, 28, 28, true, true, false, 1.0f, -3.0f);
-		p->setPosition(x, y);
-		break;
+		std::string token;
+		ist >> token;
+		if (token == "}")
+		{
+			break;
+		}
+		cd.args.push_back(token);
 	}
-	case EType::TestWall:
+	
+	
+	return ist;
+}
+
+std::istream &operator >> (std::istream &ist, Factory::Blueprint &b)
+{
+	char c;
+	if (!(ist >> c) || c != '{')
 	{
-		p->addComponent<RenderComponent>(p, "Squares.png", 32, 0, 32, 32);
-		p->addComponent<PhysicsComponent>(p, 2, 2, 28, 28, false, true, true);
-		p->setPosition(x, y);
-		break;
+		ist.clear(std::ios_base::failbit);
+		return ist;
 	}
+
+	std::string bName;
+	ist >> bName;
+	auto p = b.find(bName);
+	if (p != b.end()) return ist;
+
+	std::vector<CompData> v;
+
+	while (true)
+	{
+		CompData cd;
+		if (!(ist >> cd))
+		{
+			ist.clear();
+			break;
+		}
+		v.push_back(cd);
 	}
+
+	ist >> c;
+	b[bName] = v;
+	return ist;
+}
+
+
+
+void Factory::createBlueprints(const std::string &fName)
+{
+	std::ifstream f{ "Data\\" + fName };
+	while (f)
+		f >> m_blueprint;
+}
+
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name)
+{
+	auto p = m_blueprint.find(name);
 }

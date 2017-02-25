@@ -20,6 +20,8 @@ NuScene::NuScene() :
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
 	m_factory = make_shared<Factory>();
 
+	m_factory->createBlueprints("Blueprints.txt");
+
 	// Test data
 
 	

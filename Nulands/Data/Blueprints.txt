@@ -1,0 +1,10 @@
+{ 
+Box
+{ Render Squares.png 0.0 0.0 32.0 32.0 }
+}
+
+{
+FallingBox
+{ Render Squares.png 32.0 0.0 32.0 32.0 }
+{ Physics 2.0 2.0 28.0 28.0 true true false 0.0 0.0 }
+}
