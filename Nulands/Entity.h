@@ -72,10 +72,21 @@ public:
 		for (auto& p : m_component)
 			p->update();
 	}
+	void setActive(bool b)
+	{
+		m_active = b;
+		for (auto sp : m_component)
+			sp->setActive(b);
+	}
+	bool active() const
+	{
+		return m_active;
+	}
 private:
 	std::vector<std::shared_ptr<IComponent>> m_component;
 	GTypes::EntityGuid m_guid;
 	sf::Vector2f m_position;
+	bool m_active{ true };
 	static GTypes::EntityGuid m_guidCounter;
 };
 

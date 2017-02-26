@@ -18,6 +18,15 @@ public:
 	{
 		return m_parentEntity;
 	}
+	void setActive(bool b)
+	{
+		m_active = b;
+	}
+	bool active() const
+	{
+		return m_active;
+	}
 private:
 	Entity *m_parentEntity;
+	bool m_active{ true };
 };

@@ -9,7 +9,7 @@ void PhysicsSystem::update()
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
 		auto p = AutoList<PhysicsComponent>::get(i);
-		if (!p->isStatic())
+		if (!p->isStatic() && p->active())
 			adjustForces(p);
 	}
 	checkCollisions();
@@ -36,7 +36,7 @@ void PhysicsSystem::checkCollisions()
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
 		auto p = AutoList<PhysicsComponent>::get(i);
-		if (!p->isStatic())
+		if (!p->isStatic() && p->active())
 		{
 			float xm = p->momentum().x;
 			float ym = p->momentum().y;
@@ -44,9 +44,12 @@ void PhysicsSystem::checkCollisions()
 			m_qt->retrieve(v, p);
 			for (auto pp : v)
 			{
-				if (collisionX(p, pp, xm) || collisionY(p, pp, ym))
+				if (pp->active())
 				{
-					// Broadcast message
+					if (collisionX(p, pp, xm) || collisionY(p, pp, ym))
+					{
+						// Broadcast message
+					}
 				}
 			}
 

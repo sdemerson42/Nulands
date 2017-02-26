@@ -152,6 +152,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatorSystem.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="Factory.cpp" />
@@ -162,6 +163,8 @@
     <ClCompile Include="RenderSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatorComponent.h" />
+    <ClInclude Include="AnimatorSystem.h" />
     <ClInclude Include="AutoList.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EventBase.h" />

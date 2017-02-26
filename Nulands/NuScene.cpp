@@ -2,9 +2,11 @@
 
 #include "RenderSystem.h"
 #include "PhysicsSystem.h"
+#include "AnimatorSystem.h"
 
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
+#include "AnimatorComponent.h"
 
 #include "Factory.h"
 
@@ -17,14 +19,16 @@ NuScene::NuScene() :
 	m_window{ sf::VideoMode{800, 600}, "NuGame" }
 {
 	m_systemVec.push_back(std::make_shared<RenderSystem>(&m_window));
+
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
+	m_fixedSystemVec.push_back(std::make_shared<AnimatorSystem>());
+
 	m_factory = make_shared<Factory>();
 
 	m_factory->createBlueprints("Blueprints.txt");
 
 	// Test data
 
-	
 	// End test data
 
 	m_clock.restart();
