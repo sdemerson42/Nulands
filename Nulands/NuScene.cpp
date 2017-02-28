@@ -7,6 +7,7 @@
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
 #include "AnimatorComponent.h"
+#include "TilesComponent.h"
 
 #include "Factory.h"
 

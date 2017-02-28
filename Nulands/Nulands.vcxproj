@@ -161,6 +161,7 @@
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="TilesComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatorComponent.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="TilesComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
