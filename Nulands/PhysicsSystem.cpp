@@ -9,7 +9,7 @@ void PhysicsSystem::update()
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
 		auto p = AutoList<PhysicsComponent>::get(i);
-		if (!p->isStatic() && p->active())
+		if (!p->m_static && p->active())
 			adjustForces(p);
 	}
 	checkCollisions();
@@ -17,7 +17,7 @@ void PhysicsSystem::update()
 
 void PhysicsSystem::adjustForces(PhysicsComponent *p)
 {
-	p->setMomentum(constrainToMax(p->momentum().x), constrainToMax(p->momentum().y));
+	p->setMomentum(constrainToMax(p->m_momentum.x), constrainToMax(p->m_momentum.y));
 	applyGravity(p);
 }
 
@@ -36,10 +36,10 @@ void PhysicsSystem::checkCollisions()
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
 		auto p = AutoList<PhysicsComponent>::get(i);
-		if (!p->isStatic() && p->active())
+		if (!p->m_static && p->active())
 		{
-			float xm = p->momentum().x;
-			float ym = p->momentum().y;
+			float xm = p->m_momentum.x;
+			float ym = p->m_momentum.y;
 			vector<PhysicsComponent *> v;
 			m_qt->retrieve(v, p);
 			for (auto pp : v)
@@ -65,16 +65,16 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 {	
 	float px1 = p1->getParent()->position().x;
 	float py1 = p1->getParent()->position().y;
-	float x1 = px1 + p1->collisionBox().x;
-	float y1 = py1 + p1->collisionBox().y;
-	float x2 = p2->getParent()->position().x + p2->collisionBox().x;
-	float y2 = p2->getParent()->position().y + p2->collisionBox().y;
+	float x1 = px1 + p1->m_collisionBox.x;
+	float y1 = py1 + p1->m_collisionBox.y;
+	float x2 = p2->getParent()->position().x + p2->m_collisionBox.x;
+	float y2 = p2->getParent()->position().y + p2->m_collisionBox.y;
 	
-	GTypes::Rect r1{ x1 + p1->momentum().x, y1, p1->collisionBox().w, p1->collisionBox().h };
-	GTypes::Rect r2{ x2, y2, p2->collisionBox().w, p2->collisionBox().h };
+	GTypes::Rect r1{ x1 + p1->m_momentum.x, y1, p1->m_collisionBox.w, p1->m_collisionBox.h };
+	GTypes::Rect r2{ x2, y2, p2->m_collisionBox.w, p2->m_collisionBox.h };
 	if (collide(r1, r2))
 	{
-		if (p1->solid() && p2->solid())
+		if (p1->m_solid && p2->m_solid)
 		{
 			float deltaX = 0;
 			if (xStartMomentum > 0)
@@ -82,7 +82,7 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 			if (xStartMomentum < 0)
 				deltaX = (x2 + r2.w) - x1;
 			p1->getParent()->setPosition(px1 + deltaX, py1);
-			p1->setMomentum(0.0f, p1->momentum().y);
+			p1->setMomentum(0.0f, p1->m_momentum.y);
 			return true;
 		}
 	}
@@ -93,17 +93,17 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 {
 	float px1 = p1->getParent()->position().x;
 	float py1 = p1->getParent()->position().y;
-	float x1 = px1 + p1->collisionBox().x;
-	float y1 = py1 + p1->collisionBox().y;
-	float x2 = p2->getParent()->position().x + p2->collisionBox().x;
-	float y2 = p2->getParent()->position().y + p2->collisionBox().y;
+	float x1 = px1 + p1->m_collisionBox.x;
+	float y1 = py1 + p1->m_collisionBox.y;
+	float x2 = p2->getParent()->position().x + p2->m_collisionBox.x;
+	float y2 = p2->getParent()->position().y + p2->m_collisionBox.y;
 
-	GTypes::Rect r1{ x1, y1 + p1->momentum().y, p1->collisionBox().w, p1->collisionBox().h };
-	GTypes::Rect r2{ x2, y2, p2->collisionBox().w, p2->collisionBox().h };
+	GTypes::Rect r1{ x1, y1 + p1->m_momentum.y, p1->m_collisionBox.w, p1->m_collisionBox.h };
+	GTypes::Rect r2{ x2, y2, p2->m_collisionBox.w, p2->m_collisionBox.h };
 	if (collide(r1, r2))
 	{
 
-		if (p1->solid() && p2->solid())
+		if (p1->m_solid && p2->m_solid)
 		{
 			float deltaY = 0;
 			if (yStartMomentum > 0)
@@ -111,7 +111,7 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 			if (yStartMomentum < 0)
 				deltaY = (y2 + r2.h) - y1;
 			p1->getParent()->setPosition(px1, py1 + deltaY);
-			p1->setMomentum(p1->momentum().x, 0.0f);
+			p1->setMomentum(p1->m_momentum.x, 0.0f);
 			return true;
 		}
 	}
@@ -125,8 +125,8 @@ bool PhysicsSystem::collide(const GTypes::Rect &r1, const GTypes::Rect &r2)
 
 void PhysicsSystem::applyForce(PhysicsComponent *p, float x, float y)
 {
-	float _x = constrainToMax(p->momentum().x + x);
-	float _y = constrainToMax(p->momentum().y + y);
+	float _x = constrainToMax(p->m_momentum.x + x);
+	float _y = constrainToMax(p->m_momentum.y + y);
 	p->setMomentum(_x, _y);
 }
 

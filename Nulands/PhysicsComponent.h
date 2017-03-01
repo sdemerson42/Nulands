@@ -5,9 +5,13 @@
 #include "GTypes.h"
 #include "SFML\Graphics.hpp"
 
+class PhysicsSystem;
+
 class PhysicsComponent : public IComponent, public AutoList<PhysicsComponent>
 {
 public:
+	friend PhysicsSystem;
+
 	PhysicsComponent(Entity *parent, float px, float py, float w, float h, bool usesGravity = false, bool solid = false, bool isStatic = false, 
 		float momentumX = 0.0f, float momentumY = 0.0f) :
 		IComponent{ parent }, m_collisionBox{ px, py, w, h }, m_usesGravity{ usesGravity }, m_solid{ solid }, m_static{ isStatic },

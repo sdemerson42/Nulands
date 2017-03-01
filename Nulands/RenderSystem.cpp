@@ -33,10 +33,10 @@ void RenderSystem::fillVas()
 				vap = m_vaMap.find(fName);
 			}
 
-			float w = rcp->texSize().x;
-			float h = rcp->texSize().y;
-			float tx = rcp->texCoord().x;
-			float ty = rcp->texCoord().y;
+			float w = rcp->m_texSize.x;
+			float h = rcp->m_texSize.y;
+			float tx = rcp->m_texCoord.x;
+			float ty = rcp->m_texCoord.y;
 			float x = rcp->getParent()->position().x;
 			float y = rcp->getParent()->position().y;
 

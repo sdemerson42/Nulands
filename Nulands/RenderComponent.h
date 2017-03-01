@@ -8,10 +8,12 @@
 
 class Entity;
 class AnimatorSystem;
+class RenderSystem;
 
 class RenderComponent : public IComponent, public AutoList<RenderComponent>
 {
 	friend AnimatorSystem;
+	friend RenderSystem;
 public:
 	RenderComponent(Entity *parent, const std::string &fName, sf::Vector2f &texCoord, const sf::Vector2f &texSize) :
 		IComponent{ parent }, m_fName{ fName }, m_texCoord { texCoord }, m_texSize{ texSize }
