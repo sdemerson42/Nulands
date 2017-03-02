@@ -3,11 +3,13 @@
 #include "RenderSystem.h"
 #include "PhysicsSystem.h"
 #include "AnimatorSystem.h"
+#include "CameraSystem.h"
 
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
 #include "AnimatorComponent.h"
 #include "TilesComponent.h"
+#include "CameraComponent.h"
 
 #include "Factory.h"
 
@@ -23,6 +25,7 @@ NuScene::NuScene() :
 
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
 	m_fixedSystemVec.push_back(std::make_shared<AnimatorSystem>());
+	m_fixedSystemVec.push_back(std::make_shared<CameraSystem>());
 
 	m_factory = make_shared<Factory>();
 

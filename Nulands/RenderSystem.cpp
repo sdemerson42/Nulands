@@ -1,6 +1,7 @@
 #include "RenderSystem.h"
 #include "RenderComponent.h"
 #include "Entity.h"
+#include "CameraComponent.h"
 
 void RenderSystem::update()
 {
@@ -50,7 +51,11 @@ void RenderSystem::fillVas()
 
 void RenderSystem::drawVas()
 {
+	if (AutoList<CameraComponent>::size() == 0) return;
+	auto c = AutoList<CameraComponent>::get(0);
+
 	m_windowRef->clear();
+	m_windowRef->setView(c->m_view);
 
 	for (auto &p : m_vaMap)
 		m_windowRef->draw(p.second, sf::RenderStates{ &m_textureMap.find(p.first)->second });
