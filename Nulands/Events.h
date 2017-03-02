@@ -1,40 +1,25 @@
 #pragma once
 
 #include "EventBase.h"
-#include <string>
+#include "SFML\Graphics.hpp"
 
 namespace Events
 {
 
-	
-	// Events intended for communications to and from layers
+	// Intra-System Events
 
-	class TextOutputEvent : public EventBase
+	class CameraMovementEvent : public EventBase
 	{
 	public:
-		TextOutputEvent(const std::string& text) :
-			m_text{ text }
+		CameraMovementEvent(sf::View *viewRef) :
+			m_viewRef{ viewRef }
 		{}
-		const std::string& text() const
+		sf::View *viewRef() const
 		{
-			return m_text;
+			return m_viewRef;
 		}
 	private:
-		std::string m_text;
-	};
-
-	class PlayerCommandEvent : public EventBase
-	{
-	public:
-		PlayerCommandEvent(const std::string& cmd) :
-			m_cmd{ cmd }
-		{}
-		const std::string& cmd() const
-		{
-			return m_cmd;
-		}
-	private:
-		std::string m_cmd;
+		sf::View *m_viewRef;
 	};
 
 };
