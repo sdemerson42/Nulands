@@ -1,10 +1,21 @@
-{ 
-Box
-{ Render Squares.png 0.0 0.0 32.0 32.0 }
+{
+Bak
+{ Render Squares.png 64 0 32 32 }
 }
 
 {
-FallingBox
-{ Render Squares.png 32.0 0.0 32.0 32.0 }
-{ Physics 2.0 2.0 28.0 28.0 true true false 0.0 0.0 }
+Map
+{ Tiles Tileset.txt }
+}
+
+{
+Player
+{ Render Player.png 0 0 32 32 }
+{ Physics 2 2 28 28 true true false }
+{ Animator }
+{ Animation right 4 32 0 32 32 64 0 32 32 96 0 32 32 64 0 32 32 10 true }
+{ Animation left 4 128 0 32 32 160 0 32 32 192 0 32 32 160 0 32 32 10 true }
+{ Animation idleright 1 0 0 32 32 1 false }
+{ Animation idleleft 1 224 0 32 32 1 false }
+{ Camera 0 0 800 600 0 0 1 1 16 16 100 }
 }
