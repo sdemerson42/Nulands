@@ -25,6 +25,7 @@ void RenderSystem::fillVas()
 			{
 				m_textureMap[fName] = sf::Texture{};
 				m_textureMap[fName].loadFromFile("data\\textures\\" + fName);
+				m_textureOrder.push_back(fName);
 			}
 
 			auto vap = m_vaMap.find(fName);
@@ -57,8 +58,14 @@ void RenderSystem::drawVas()
 		auto c = AutoList<CameraComponent>::get(0);
 		m_windowRef->setView(c->m_view);
 	}
-	for (auto &p : m_vaMap)
-		m_windowRef->draw(p.second, sf::RenderStates{ &m_textureMap.find(p.first)->second });
+	
+	for (auto &s : m_textureOrder)
+	{
+		auto p = m_vaMap.find(s);
+		m_windowRef->draw(p->second, sf::RenderStates{ &m_textureMap.find(s)->second });
+	}
+
+		
 
 	m_windowRef->display();
 }

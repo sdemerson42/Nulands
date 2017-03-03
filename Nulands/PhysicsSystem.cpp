@@ -40,6 +40,7 @@ void PhysicsSystem::checkCollisions()
 		{
 			float xm = p->m_momentum.x;
 			float ym = p->m_momentum.y;
+			m_dragFlag = false;
 			vector<PhysicsComponent *> v;
 			m_qt->retrieve(v, p);
 			for (auto pp : v)
@@ -54,9 +55,24 @@ void PhysicsSystem::checkCollisions()
 			}
 
 			p->getParent()->addPosition(p->momentum().x, p->momentum().y);
+
+			if (m_dragFlag)
+			{
+				float uxm = p->m_momentum.x;
+				if (uxm > 0)
+				{
+					uxm -= m_drag;
+					if (uxm < 0) uxm = 0.0f;
+				}
+				else if (uxm < 0)
+				{
+					uxm += m_drag;
+					if (uxm > 0) uxm = 0.0f;
+				}
+				p->m_momentum.x = uxm;
+			}
 		}
 	}
-
 
 	delete m_qt;
 }
@@ -100,6 +116,7 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 
 	GTypes::Rect r1{ x1, y1 + p1->m_momentum.y, p1->m_collisionBox.w, p1->m_collisionBox.h };
 	GTypes::Rect r2{ x2, y2, p2->m_collisionBox.w, p2->m_collisionBox.h };
+
 	if (collide(r1, r2))
 	{
 
@@ -107,7 +124,11 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 		{
 			float deltaY = 0;
 			if (yStartMomentum > 0)
+			{
 				deltaY = (y2 - r1.h) - y1;
+				if (deltaY == 0.0f)
+					m_dragFlag = true;
+			}
 			if (yStartMomentum < 0)
 				deltaY = (y2 + r2.h) - y1;
 			p1->getParent()->setPosition(px1, py1 + deltaY);
@@ -134,7 +155,7 @@ float PhysicsSystem::constrainToMax(float m)
 {
 	if (abs(m) > m_maxVelocity)
 	{
-		if (m < 0) m = 1.0f * m_maxVelocity;
+		if (m < 0) m = -1.0f * m_maxVelocity;
 		else m = m_maxVelocity;
 	}
 	return m;

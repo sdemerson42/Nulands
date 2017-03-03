@@ -13,6 +13,8 @@ public:
 private:
 	const float m_gravity = 0.1f;
 	const float m_maxVelocity = 10.0f;
+	const float m_drag = 0.1f;
+	bool m_dragFlag;
 	QuadTree *m_qt;
 	void adjustForces(PhysicsComponent *);
 	void applyGravity(PhysicsComponent *);

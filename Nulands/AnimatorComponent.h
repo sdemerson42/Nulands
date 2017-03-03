@@ -40,6 +40,7 @@ public:
 	void addAnimation(const Animation &a)
 	{
 		m_animation.push_back(a);
+		m_animIndex = m_animation.end();
 	}
 	void play(const std::string &s)
 	{
@@ -47,11 +48,11 @@ public:
 		{
 			return aa.name == s;
 		});
-		if (a != m_animation.end())
+		if (a != m_animation.end() && a != m_animIndex)
 		{
 			m_animIndex = a;
-			m_frameIndex = 0;
-			m_counter = 0;
+			m_frameIndex = -1;
+			m_counter = -1;
 			m_animating = true;
 		}
 	}

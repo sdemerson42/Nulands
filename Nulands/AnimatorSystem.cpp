@@ -10,11 +10,15 @@ void AnimatorSystem::update()
 		AnimatorComponent *p = AutoList<AnimatorComponent>::get(i);
 		if (p->active() && p->m_animating)
 		{
+			bool firstFrame = false;
 			auto a = p->m_animIndex;
 			if (a != p->m_animation.end())
 			{
 				++p->m_counter;
-				if (p->m_counter == a->speed)
+				if (p->m_counter == 0)
+					firstFrame = true;
+				
+				if (p->m_counter == a->speed || firstFrame)
 				{
 					p->m_counter = 0;
 					++p->m_frameIndex;
