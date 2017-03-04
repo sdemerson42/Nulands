@@ -35,6 +35,7 @@ private:
 	void addAnimatorC(Entity *e, const std::vector<std::string> &v);
 	void addTilesC(Entity *e, const std::vector<std::string> &v);
 	void addAnimation(Entity *e, const std::vector<std::string> &v);
+	void addParticle(Entity *e, const std::vector<std::string> &v);
 };
 
 

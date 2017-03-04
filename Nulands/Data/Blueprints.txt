@@ -19,3 +19,8 @@ Player
 { Animation idleleft 1 224 0 32 32 1 false }
 { Camera 0 0 800 600 0 0 1 1 16 16 100 }
 }
+
+{
+Snow
+{ Particle 0 -10 800 10 150 4.0 0.3 0.0 2.0 Squares.png 100 100 2 2 0.4 3.0 }
+}

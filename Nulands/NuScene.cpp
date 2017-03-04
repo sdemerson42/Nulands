@@ -5,6 +5,7 @@
 #include "AnimatorSystem.h"
 #include "CameraSystem.h"
 #include "InputSystem.h"
+#include "ParticleSystem.h"
 
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
@@ -12,6 +13,7 @@
 #include "TilesComponent.h"
 #include "CameraComponent.h"
 #include "PlayerInputComponent.h"
+#include "ParticleComponent.h"
 
 #include "Factory.h"
 
@@ -29,6 +31,7 @@ NuScene::NuScene() :
 	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
 	m_fixedSystemVec.push_back(std::make_shared<AnimatorSystem>());
 	m_fixedSystemVec.push_back(std::make_shared<CameraSystem>());
+	m_fixedSystemVec.push_back(std::make_shared<ParticleSystem>());
 
 	m_factory = make_shared<Factory>();
 
@@ -48,6 +51,10 @@ NuScene::NuScene() :
 	auto p = m_entityVec[m_entityVec.size() - 1].get();
 	p->addComponent<PlayerInputComponent>(p);
 
+
+	m_factory->createEntity(m_entityVec, "Snow");
+	
+	
 	// End test data
 
 	m_clock.restart();

@@ -5,6 +5,7 @@
 #include "AnimatorComponent.h"
 #include "CameraComponent.h"
 #include "TilesComponent.h"
+#include "ParticleComponent.h"
 
 #define addC(T, ...) addComponent<##T>(__VA_ARGS__)
 
@@ -93,6 +94,7 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 		if (c.type == "Animation") addAnimation(e, c.args);
 		if (c.type == "Tiles") addTilesC(e, c.args);
 		if (c.type == "Camera") addCameraC(e, c.args);
+		if (c.type == "Particle") addParticle(e, c.args);
 	}
 
 	e->setPosition(x, y);
@@ -118,6 +120,12 @@ void Factory::addCameraC(Entity *e, const std::vector<std::string> &v)
 void Factory::addAnimatorC(Entity *e, const std::vector<std::string> &v)
 {
 	e->addComponent<AnimatorComponent>(e);
+}
+
+void Factory::addParticle(Entity *e, const std::vector<std::string> &v)
+{
+	e->addComponent<ParticleComponent>(e, stof(v[0]), stof(v[1]), stof(v[2]), stof(v[3]), ParticleComponent::EmitPattern::Directional,
+		stoi(v[4]), stof(v[5]), stof(v[6]), stof(v[7]), stof(v[8]), v[9], stof(v[10]), stof(v[11]), stof(v[12]), stof(v[13]), stof(v[14]), stof(v[15]));
 }
 
 void Factory::addAnimation(Entity *e, const std::vector<std::string> &v)

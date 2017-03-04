@@ -3,6 +3,8 @@
 #include "EventBase.h"
 #include "SFML\Graphics.hpp"
 
+class Particle;
+
 namespace Events
 {
 
@@ -21,7 +23,9 @@ namespace Events
 		InputWrapper *iw;
 	};
 
-	// Intra-System Events
+	// Particle Events
+
+	
 
 
 };
