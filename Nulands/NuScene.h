@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <memory>
+#include <string>
 
 #include "SFML\Graphics.hpp"
 
@@ -12,15 +13,12 @@ class Factory;
 class NuScene
 {
 public:
-	NuScene();
-	void update();
+	NuScene(const std::string &fName);
+	void initialize();
+	void close();
 private:
 	std::vector<std::shared_ptr<Entity>> m_entityVec;
-	std::vector<std::shared_ptr<ISystem>> m_systemVec;
-	std::vector<std::shared_ptr<ISystem>> m_fixedSystemVec;
 	std::shared_ptr<Factory> m_factory;
-	sf::RenderWindow m_window;
-	sf::Clock m_clock;
-	float m_deltaTime{ 0.0f };
-	const float m_frameRate{ 60.0f };
+	sf::RenderWindow *m_window;
+	std::string m_dataFName;
 };

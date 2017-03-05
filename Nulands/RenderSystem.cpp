@@ -62,7 +62,8 @@ void RenderSystem::drawVas()
 	for (auto &s : m_textureOrder)
 	{
 		auto p = m_vaMap.find(s);
-		m_windowRef->draw(p->second, sf::RenderStates{ &m_textureMap.find(s)->second });
+		if (p != m_vaMap.end())
+			m_windowRef->draw(p->second, sf::RenderStates{ &m_textureMap.find(s)->second });
 	}
 
 		

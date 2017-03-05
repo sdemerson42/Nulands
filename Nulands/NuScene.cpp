@@ -1,12 +1,5 @@
 #include "NuScene.h"
 
-#include "RenderSystem.h"
-#include "PhysicsSystem.h"
-#include "AnimatorSystem.h"
-#include "CameraSystem.h"
-#include "InputSystem.h"
-#include "ParticleSystem.h"
-
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
 #include "AnimatorComponent.h"
@@ -22,21 +15,15 @@
 
 #include <iostream>
 
-NuScene::NuScene() :
-	m_window{ sf::VideoMode{800, 600}, "NuGame" }
+NuScene::NuScene(const std::string &fName) :
+	m_dataFName{ fName }
 {
-	m_systemVec.push_back(std::make_shared<RenderSystem>(&m_window));
-
-	m_fixedSystemVec.push_back(std::make_shared<InputSystem>());
-	m_fixedSystemVec.push_back(std::make_shared<PhysicsSystem>());
-	m_fixedSystemVec.push_back(std::make_shared<AnimatorSystem>());
-	m_fixedSystemVec.push_back(std::make_shared<CameraSystem>());
-	m_fixedSystemVec.push_back(std::make_shared<ParticleSystem>());
-
 	m_factory = make_shared<Factory>();
-
 	m_factory->createBlueprints("Blueprints.txt");
+}
 
+void NuScene::initialize()
+{
 	// Test data
 
 	for (int j = 0; j < 20; ++j)
@@ -53,35 +40,14 @@ NuScene::NuScene() :
 
 
 	m_factory->createEntity(m_entityVec, "Snow");
-	
-	
-	// End test data
 
-	m_clock.restart();
+
+	// End test data
 }
 
-void NuScene::update()
+void NuScene::close()
 {
+	// Persistent data needs to be handled
 
-	while (m_window.isOpen())
-	{
-
-		sf::Event event;
-		while (m_window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				m_window.close();
-		}
-
-		if (m_clock.getElapsedTime().asSeconds() + m_deltaTime >= 1.0f / m_frameRate)
-		{
-			m_deltaTime = m_clock.getElapsedTime().asSeconds() + m_deltaTime - (1.0f / m_frameRate);
-			m_clock.restart();
-			for (auto &fsps : m_fixedSystemVec)
-				fsps->update();
-		}
-
-		for (auto &sps : m_systemVec)
-			sps->update();
-	}
+	m_entityVec.clear();
 }

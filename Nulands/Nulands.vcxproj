@@ -160,7 +160,9 @@
     <ClCompile Include="Factory.cpp" />
     <ClCompile Include="InputSystem.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="NuGame.cpp" />
     <ClCompile Include="NuScene.cpp" />
+    <ClCompile Include="ParticleComponent.cpp" />
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
@@ -183,6 +185,7 @@
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="ISystem.h" />
+    <ClInclude Include="NuGame.h" />
     <ClInclude Include="NuScene.h" />
     <ClInclude Include="ParticleComponent.h" />
     <ClInclude Include="ParticleSystem.h" />

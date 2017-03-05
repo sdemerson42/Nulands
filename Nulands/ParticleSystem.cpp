@@ -4,13 +4,7 @@
 #include "Entity.h"
 #include <algorithm>
 
-void ParticleSystem::Particle::update()
-{
-	entity->addPosition(mx, my);
-	++lifeCounter;
-	if (lifeCounter == lifetime)
-		system->m_destroyVec.push_back(this);
-}
+
 
 void ParticleSystem::update()
 {
@@ -18,26 +12,25 @@ void ParticleSystem::update()
 	{
 		auto pc = AutoList<ParticleComponent>::get(i);
 		if (pc->active()) spawnParticle(pc);
+
+		for (auto &sp : pc->m_particle)
+			sp->update();
+		destroyParticle(pc);
 	}
-
-	for (auto &sp : m_particle)
-		sp->update();
-
-	destroyParticle();
 }
 
-void ParticleSystem::destroyParticle()
+void ParticleSystem::destroyParticle(ParticleComponent *pc)
 {
-	for (auto p : m_destroyVec)
+	for (auto p : pc->m_destroyVec)
 	{
-		auto pi = std::find_if(m_particle.begin(), m_particle.end(), [p](std::shared_ptr<Particle> &spp)
+		auto pi = std::find_if(pc->m_particle.begin(), pc->m_particle.end(), [p](std::shared_ptr<ParticleComponent::Particle> &spp)
 		{
 			return spp.get() == p;
 		});
-		if (pi != m_particle.end())
-			m_particle.erase(pi);
+		if (pi != pc->m_particle.end())
+			pc->m_particle.erase(pi);
 	}
-	m_destroyVec.clear();
+	pc->m_destroyVec.clear();
 }
 
 void ParticleSystem::spawnParticle(ParticleComponent *pc)
@@ -49,15 +42,14 @@ void ParticleSystem::spawnParticle(ParticleComponent *pc)
 	int pCounter = 0;
 	while (pCounter < pTot)
 	{
-		m_particle.push_back(std::make_shared<Particle>());
-		auto particle = m_particle[m_particle.size() - 1].get();
+		pc->m_particle.push_back(std::make_shared<ParticleComponent::Particle>(pc));
+		auto particle =pc->m_particle[pc->m_particle.size() - 1].get();
 		particle->entity = std::make_shared<Entity>();
 		particle->entity->setPosition(pc->m_origin.x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.w)),
 			pc->m_origin.y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.y)));
 		particle->entity->addComponent<RenderComponent>(particle->entity.get(), pc->m_renderData.fName, pc->m_renderData.texPosition.x,
 			pc->m_renderData.texPosition.y, pc->m_renderData.texPosition.w, pc->m_renderData.texPosition.h);
 		particle->lifetime = pc->m_lifetime;
-		particle->system = this;
 
 		if (pc->m_emitPattern == ParticleComponent::EmitPattern::Directional)
 		{

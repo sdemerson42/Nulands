@@ -24,7 +24,9 @@ public:
 		m_position.y = y;
 	}
 	virtual ~Entity()
-	{}
+	{
+		m_component.clear();
+	}
 	GTypes::EntityGuid guid() const
 	{
 		return m_guid;

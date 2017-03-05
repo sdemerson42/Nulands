@@ -41,4 +41,24 @@ private:
 	float m_speedVariance;
 	sf::Vector2f m_travelVector;
 	float m_spawnCounter{ 0.0f };
+
+	struct Particle
+	{
+		Particle(ParticleComponent *_parent) :
+			parent{ _parent }
+		{}
+		~Particle()
+		{
+			entity.reset();
+		}
+		ParticleComponent *parent;
+		int lifetime;
+		int lifeCounter{ 0 };
+		std::shared_ptr<Entity> entity;
+		float mx;
+		float my;
+		void update();
+	};
+	std::vector<shared_ptr<Particle>> m_particle;
+	std::vector<Particle *> m_destroyVec;
 };
