@@ -3,6 +3,7 @@
 #include "EventManager.h"
 #include "AutoList.h"
 
+
 class Entity;
 
 class IComponent: public EventHandler, public AutoList<IComponent>
@@ -26,7 +27,10 @@ public:
 	{
 		return m_active;
 	}
+	virtual void outState(std::ostream &ost) const = 0;
 private:
 	Entity *m_parentEntity;
 	bool m_active{ true };
 };
+
+std::ostream &operator << (std::ostream &ost, const IComponent &c);

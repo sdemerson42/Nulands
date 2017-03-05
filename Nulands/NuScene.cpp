@@ -13,7 +13,6 @@
 #include "Entity.h"
 #include "SFML\System.hpp"
 
-#include <iostream>
 
 NuScene::NuScene(const std::string &fName) :
 	m_dataFName{ fName }
@@ -22,32 +21,48 @@ NuScene::NuScene(const std::string &fName) :
 	m_factory->createBlueprints("Blueprints.txt");
 }
 
-void NuScene::initialize()
+void NuScene::initialize(bool fromState)
 {
-	// Test data
+	if (fromState)
+		initFromState();
+	else
+		initFromFile();
+}
 
-	for (int j = 0; j < 20; ++j)
+void NuScene::initFromFile()
+{
+	std::ifstream ifs{ "Data\\" + m_dataFName };
+	while (ifs)
 	{
-		for (int i = 0; i < 20; ++i)
+		std::string name;
+		
+		if (!(ifs >> name))
 		{
-			m_factory->createEntity(m_entityVec, "Bak", i * 32, j * 32);
+			ifs.clear(ios_base::failbit);
+			break;
 		}
+
+		float x, y;
+		ifs >> x >> y;
+
+		m_factory->createEntity(m_entityVec, name, x, y);
 	}
-	m_factory->createEntity(m_entityVec, "Map");
-	m_factory->createEntity(m_entityVec, "Player", 60, 0);
-	auto p = m_entityVec[m_entityVec.size() - 1].get();
-	p->addComponent<PlayerInputComponent>(p);
+	m_entityVec[2]->addComponent<PlayerInputComponent>(m_entityVec[2].get());
+}
 
-
-	m_factory->createEntity(m_entityVec, "Snow");
-
-
-	// End test data
+void NuScene::initFromState()
+{
+	m_factory->createEntity(m_entityVec, m_stateImage);
 }
 
 void NuScene::close()
 {
 	// Persistent data needs to be handled
+
+	// Test
+
+	for (auto &sp : m_entityVec)
+		sp->outState(m_stateImage);
 
 	m_entityVec.clear();
 }

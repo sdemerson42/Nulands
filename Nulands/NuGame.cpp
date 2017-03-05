@@ -28,11 +28,12 @@ void NuGame::makeScenes()
 {
 	// Temp
 
-	m_scene.push_back(std::make_shared<NuScene>("Test"));
+	m_scene.push_back(std::make_shared<NuScene>("Test.txt"));
 }
 
 void NuGame::update()
 {
+	
 	while (m_window.isOpen())
 	{
 

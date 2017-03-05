@@ -61,3 +61,9 @@ TilesComponent::TilesComponent(Entity *parent, const std::string &fName) :
 	}
 }
 
+void TilesComponent::outState(std::ostream &ost) const
+{
+	for (auto &sp : m_entVec)
+		sp->outState(ost);
+}
+

@@ -60,6 +60,18 @@ public:
 	{
 		m_animIndex = m_animation.end();
 	}
+	void outState(std::ostream &ost) const override
+	{
+		ost << "{ Animator }\n";
+		for (auto &a : m_animation)
+		{
+			ost << "{ Animation " << a.name << " " << a.frame.size() << " ";
+			for (auto f : a.frame)
+				ost << f.x << " " << f.y << " " << f.w << " " << f.h << " ";
+			ost << a.speed << " " << (a.loop ? "true" : "false") << " }\n";
+		}
+	
+	}
 private:
 	std::vector<Animation> m_animation;
 	std::vector<Animation>::iterator m_animIndex{ m_animation.end() };

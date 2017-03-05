@@ -7,8 +7,6 @@
 #include "TilesComponent.h"
 #include "ParticleComponent.h"
 
-#define addC(T, ...) addComponent<##T>(__VA_ARGS__)
-
 std::istream &operator >> (std::istream &ist, Factory::CompData & cd)
 {
 	char c;
@@ -49,6 +47,20 @@ std::istream &operator >> (std::istream &ist, Factory::Blueprint &b)
 
 	std::string bName;
 	ist >> bName;
+
+	bool fromState = false;
+	float sx = 0;
+	float sy = 0;
+
+	ist >> c;
+	if (c != '(')
+		ist.putback(c);
+	else
+	{
+		fromState = true;
+		ist >> sx >> sy >> c;
+	}
+
 	auto p = b.find(bName);
 	if (p != b.end()) return ist;
 
@@ -61,6 +73,12 @@ std::istream &operator >> (std::istream &ist, Factory::Blueprint &b)
 		{
 			ist.clear();
 			break;
+		}
+		cd.fromState = fromState;
+		if (fromState)
+		{
+			cd.x = sx;
+			cd.y = sy;
 		}
 		v.push_back(cd);
 	}
@@ -79,10 +97,16 @@ void Factory::createBlueprints(const std::string &fName)
 		f >> m_blueprint;
 }
 
-void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name, float x, float y)
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name, float x, float y, bool fromState)
 {
-	auto p = m_blueprint.find(name);
-	if (p == m_blueprint.end()) return;
+
+	Blueprint *b;
+
+	if (fromState) b = &m_stateBlueprint;
+	else b = &m_blueprint;
+
+	auto p = b->find(name);
+	if (p == b->end()) return;
 	v.push_back(std::make_shared<Entity>());
 	auto e = v[v.size() - 1].get();
 
@@ -98,6 +122,16 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 	}
 
 	e->setPosition(x, y);
+}
+
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss)
+{
+	m_stateBlueprint.clear();
+	while (ss)
+		ss >> m_stateBlueprint;
+	for (auto &p : m_stateBlueprint)
+		for (auto &c : p.second)
+			createEntity(v, p.first, c.x, c.y, true);
 }
 
 

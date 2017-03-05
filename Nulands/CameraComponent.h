@@ -18,7 +18,14 @@ public:
 		float offsetX, float offsetY, float trackDistance);
 	void update() override
 	{}
+	void outState(std::ostream &ost) const override
+	{
+		ost << "{ Camera " << m_vPosition.x << " " << m_vPosition.y << " " << m_view.getSize().x << " " << m_view.getSize().y << " "
+			<< m_view.getViewport().left << " " << m_view.getViewport().top << " " << m_view.getViewport().width << " " << m_view.getViewport().height
+			<< " " << m_offset.x << " " << m_offset.y << " " << m_trackDistance << " }\n";
+	}
 private:
+	sf::Vector2f m_vPosition;
 	sf::View m_view;
 	float m_trackDistance;
 	sf::Vector2f m_offset;

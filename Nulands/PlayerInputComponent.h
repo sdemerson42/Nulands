@@ -17,6 +17,8 @@ public:
 	}
 	void update() override
 	{}
+	void outState(std::ostream &) const override
+	{}
 private:
 	void onInput(const Events::InputEvent *evnt);
 	AnimatorComponent *m_animator;

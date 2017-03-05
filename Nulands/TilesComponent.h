@@ -20,6 +20,7 @@ public:
 	};
 	void update() override
 	{}
+	void outState(std::ostream &ost) const override;
 private:
 	std::vector<std::shared_ptr<Entity>> m_entVec;
 };

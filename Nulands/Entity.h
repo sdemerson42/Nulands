@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 #include <algorithm>
+#include <iostream>
 
 #include "EventManager.h"
 #include "IComponent.h"
@@ -84,6 +85,7 @@ public:
 	{
 		return m_active;
 	}
+	void outState(std::ostream &ost);
 private:
 	std::vector<std::shared_ptr<IComponent>> m_component;
 	GTypes::EntityGuid m_guid;

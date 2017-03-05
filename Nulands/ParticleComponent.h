@@ -22,6 +22,13 @@ public:
 	{}
 	void update() override
 	{}
+	void outState(std::ostream &ost) const override
+	{
+		ost << "{ Particle " << m_origin.x << " " << m_origin.y << " " << m_origin.w << " " << m_origin.h << " " << m_lifetime << " " << m_speed << " " <<
+			m_spawnRate << " " << m_angleVariance << " " << m_speedVariance << " " << m_renderData.fName << " " << m_renderData.texPosition.x << " " <<
+			m_renderData.texPosition.y << " " << m_renderData.texPosition.w << " " << m_renderData.texPosition.h << " " << m_travelVector.x << " " <<
+			m_travelVector.y << " }\n";
+	}
 private:
 	GTypes::Rect m_origin;
 	EmitPattern m_emitPattern;

@@ -35,6 +35,10 @@ public:
 	{
 		return m_fName;
 	}
+	void outState(std::ostream &ost) const override
+	{
+		ost << "{ Render " << m_fName << " " << m_texCoord.x << " " << m_texCoord.y << " " << m_texSize.x << " " << m_texSize.y << " }\n";
+	}
 private:
 	std::string m_fName;
 	sf::Vector2f m_texCoord;

@@ -44,6 +44,11 @@ public:
 	{
 		return m_momentum;
 	}
+	void outState(std::ostream &ost) const override
+	{
+		ost << "{ Physics " << " " << m_collisionBox.x << " " << m_collisionBox.y << " " << m_collisionBox.w << " " << m_collisionBox.h << " " <<
+			(m_usesGravity ? "true" : "false") << " " << (m_solid ? "true" : "false") << " " << (m_static ? "true" : "false") << " }\n";
+	}
 private:
 	GTypes::Rect m_collisionBox;
 	bool m_usesGravity{ false };
