@@ -1,0 +1,4 @@
+Bak 0 0
+Map 0 0
+!Player 30 30
+Snow 0 0

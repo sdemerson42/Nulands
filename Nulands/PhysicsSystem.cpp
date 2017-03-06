@@ -29,7 +29,7 @@ void PhysicsSystem::applyGravity(PhysicsComponent *p)
 
 void PhysicsSystem::checkCollisions()
 {
-	m_qt = new QuadTree(0, 0, 800, 600);
+	m_qt = new QuadTree(0, 0, m_qtSize.x, m_qtSize.y);
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 		m_qt->insert(AutoList<PhysicsComponent>::get(i));
 
@@ -159,4 +159,10 @@ float PhysicsSystem::constrainToMax(float m)
 		else m = m_maxVelocity;
 	}
 	return m;
+}
+
+void PhysicsSystem::onQuadTreeSize(const Events::QuadTreeSize *evnt)
+{
+	m_qtSize.x = evnt->w;
+	m_qtSize.y = evnt->h;
 }

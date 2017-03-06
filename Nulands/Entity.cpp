@@ -6,6 +6,7 @@ GTypes::EntityGuid Entity::m_guidCounter = 0;
 
 void Entity::outState(std::ostream &ost)
 {
+	if (!m_persist) return;
 	// Hacky interim solution
 	bool hack = hasComponent<TilesComponent>();
 	

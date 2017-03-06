@@ -85,12 +85,21 @@ public:
 	{
 		return m_active;
 	}
+	void setPersist(bool b)
+	{
+		m_persist = b;
+	}
+	bool persist()
+	{
+		return m_persist;
+	}
 	void outState(std::ostream &ost);
 private:
 	std::vector<std::shared_ptr<IComponent>> m_component;
 	GTypes::EntityGuid m_guid;
 	sf::Vector2f m_position;
 	bool m_active{ true };
+	bool m_persist{ true };
 	static GTypes::EntityGuid m_guidCounter;
 };
 

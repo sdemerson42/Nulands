@@ -23,7 +23,16 @@ namespace Events
 		InputWrapper *iw;
 	};
 
-	// Particle Events
+	// System Events
+
+	struct QuadTreeSize : public EventBase
+	{
+		QuadTreeSize(float _w, float _h) :
+			w{ _w }, h{ _h }
+		{}
+		float w;
+		float h;
+	};
 
 	
 

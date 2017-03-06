@@ -15,10 +15,10 @@ class NuScene
 {
 public:
 	NuScene(const std::string &fName);
-	void initialize(bool fromState = false);
+	void initialize(std::vector<std::shared_ptr<Entity>> &persistentVec, bool fromState = false);
 	void close();
 private:
-	void initFromFile();
+	void initFromFile(std::vector<std::shared_ptr<Entity>> &persistentVec);
 	void initFromState();
 	std::vector<std::shared_ptr<Entity>> m_entityVec;
 	std::shared_ptr<Factory> m_factory;

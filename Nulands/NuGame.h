@@ -6,6 +6,7 @@
 
 class ISystem;
 class NuScene;
+class Entity;
 
 class NuGame
 {
@@ -13,10 +14,11 @@ public:
 	NuGame(unsigned int winW, unsigned int winH);
 	void update();
 	void makeScenes();
-	void selectScene(int scene);
+	void selectScene(int scene, bool fromState = false);
 private:
 	std::vector<std::shared_ptr<ISystem>> m_system;
 	std::vector<std::shared_ptr<ISystem>> m_fixedSystem;
+	std::vector<std::shared_ptr<Entity>> m_persistentEntity;
 	sf::RenderWindow m_window;
 	sf::Clock m_clock;
 	float m_deltaTime{ 0.0f };

@@ -2,6 +2,7 @@
 
 #include "ISystem.h"
 #include "GTypes.h"
+#include "Events.h"
 
 class PhysicsComponent;
 class QuadTree;
@@ -9,6 +10,14 @@ class QuadTree;
 class PhysicsSystem : public ISystem
 {
 public:
+	PhysicsSystem()
+	{
+		eventManager.registerFunc(this, &PhysicsSystem::onQuadTreeSize);
+	}
+	~PhysicsSystem()
+	{
+		eventManager.unregisterListener(this);
+	}
 	void update() override;
 private:
 	const float m_gravity = 0.1f;
@@ -16,6 +25,7 @@ private:
 	const float m_drag = 0.1f;
 	bool m_dragFlag;
 	QuadTree *m_qt;
+	sf::Vector2f m_qtSize{ 0,0 };
 	void adjustForces(PhysicsComponent *);
 	void applyGravity(PhysicsComponent *);
 	bool collisionX(PhysicsComponent *, PhysicsComponent *, float);
@@ -24,5 +34,6 @@ private:
 	void applyForce(PhysicsComponent *, float, float);
 	float constrainToMax(float);
 	void checkCollisions();
+	void onQuadTreeSize(const Events::QuadTreeSize *evnt);
 };
 

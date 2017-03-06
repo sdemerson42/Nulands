@@ -8,6 +8,11 @@
 #include "InputSystem.h"
 #include "ParticleSystem.h"
 
+#include "Entity.h"
+
+#include <fstream>
+#include <string>
+
 NuGame::NuGame(unsigned int winW, unsigned int winH) :
 	m_window{ sf::VideoMode{ winW, winH }, "NuGame" }, m_sceneIndex{ -1 }
 {
@@ -26,14 +31,17 @@ NuGame::NuGame(unsigned int winW, unsigned int winH) :
 
 void NuGame::makeScenes()
 {
-	// Temp
-
-	m_scene.push_back(std::make_shared<NuScene>("Test.txt"));
+	std::ifstream ifs{ "Data\\Manifest.txt" };
+	while (ifs)
+	{
+		std::string fName;
+		if (!(ifs >> fName)) break;
+		m_scene.push_back(std::make_shared<NuScene>(fName));
+	}
 }
 
 void NuGame::update()
 {
-	
 	while (m_window.isOpen())
 	{
 
@@ -57,12 +65,11 @@ void NuGame::update()
 	}
 }
 
-void NuGame::selectScene(int scene)
+void NuGame::selectScene(int scene, bool fromState)
 {
 	if (m_sceneIndex != -1)
 		m_scene[m_sceneIndex]->close();
 
 	m_sceneIndex = scene;
-	m_scene[m_sceneIndex]->initialize();
-
+	m_scene[m_sceneIndex]->initialize(m_persistentEntity, fromState);
 }
