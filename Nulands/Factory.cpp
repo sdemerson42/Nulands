@@ -6,6 +6,7 @@
 #include "CameraComponent.h"
 #include "TilesComponent.h"
 #include "ParticleComponent.h"
+#include "PlayerInputComponent.h"
 
 std::istream &operator >> (std::istream &ist, Factory::CompData & cd)
 {
@@ -119,6 +120,7 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 		if (c.type == "Tiles") addTilesC(e, c.args);
 		if (c.type == "Camera") addCameraC(e, c.args);
 		if (c.type == "Particle") addParticle(e, c.args);
+		if (c.type == "PlayerInput") addPlayerInput(e, c.args);
 	}
 
 	e->setPosition(x, y);
@@ -183,4 +185,9 @@ void Factory::addAnimation(Entity *e, const std::vector<std::string> &v)
 void Factory::addTilesC(Entity *e, const std::vector<std::string> &v)
 {
 	e->addComponent<TilesComponent>(e, v[0]);
+}
+
+void Factory::addPlayerInput(Entity *e, const std::vector<std::string> &v)
+{
+	e->addComponent<PlayerInputComponent>(e);
 }

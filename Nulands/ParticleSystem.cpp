@@ -45,8 +45,8 @@ void ParticleSystem::spawnParticle(ParticleComponent *pc)
 		pc->m_particle.push_back(std::make_shared<ParticleComponent::Particle>(pc));
 		auto particle =pc->m_particle[pc->m_particle.size() - 1].get();
 		particle->entity = std::make_shared<Entity>();
-		particle->entity->setPosition(pc->m_origin.x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.w)),
-			pc->m_origin.y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.y)));
+		particle->entity->setPosition(pc->getParent()->position().x + pc->m_origin.x + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.w)),
+			pc->getParent()->position().y + pc->m_origin.y + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / pc->m_origin.y)));
 		particle->entity->addComponent<RenderComponent>(particle->entity.get(), pc->m_renderData.fName, pc->m_renderData.texPosition.x,
 			pc->m_renderData.texPosition.y, pc->m_renderData.texPosition.w, pc->m_renderData.texPosition.h);
 		particle->lifetime = pc->m_lifetime;

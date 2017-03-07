@@ -18,6 +18,7 @@ Player
 { Animation idleright 1 0 0 32 32 1 false }
 { Animation idleleft 1 224 0 32 32 1 false }
 { Camera 0 0 800 600 0 0 1 1 16 16 100 }
+{ PlayerInput }
 }
 
 {

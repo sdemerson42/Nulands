@@ -42,6 +42,7 @@ private:
 	void addTilesC(Entity *e, const std::vector<std::string> &v);
 	void addAnimation(Entity *e, const std::vector<std::string> &v);
 	void addParticle(Entity *e, const std::vector<std::string> &v);
+	void addPlayerInput(Entity *e, const std::vector<std::string> &v);
 };
 
 
