@@ -18,10 +18,11 @@ Player
 { Animation idleright 1 0 0 32 32 1 false }
 { Animation idleleft 1 224 0 32 32 1 false }
 { Camera 0 0 800 600 0 0 1 1 16 16 100 }
+{ Particle 10 25 12 2 10 6.0 2.0 0.0 2.0 Player.png 256 0 3 3 0 1 }
 { PlayerInput }
 }
 
 {
 Snow
-{ Particle 0 -10 800 10 150 4.0 0.3 0.0 2.0 Squares.png 100 100 2 2 0.4 3.0 }
+{ Particle 0 -10 1600 10 450 4.0 0.3 0.0 2.0 Squares.png 100 100 2 2 0.4 3.0 }
 }

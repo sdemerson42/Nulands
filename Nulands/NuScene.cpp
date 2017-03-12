@@ -21,7 +21,7 @@ NuScene::NuScene(const std::string &fName) :
 	m_factory->createBlueprints("Blueprints.txt");
 	Events::QuadTreeSize qt{ 800, 600 };
 	eventManager.broadcast(&qt);
-	Events::ProxMapSize ps{ 800, 600, 100, 100 };
+	Events::ProxMapSize ps{ 1600, 1600, 96, 96 };
 	eventManager.broadcast(&ps);
 }
 

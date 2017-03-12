@@ -7,7 +7,6 @@
 PhysicsSystem::PhysicsSystem()
 {
 	eventManager.registerFunc(this, &PhysicsSystem::onQuadTreeSize);
-	eventManager.registerFunc(this, &PhysicsSystem::onProxMapSize);
 	m_qt = std::make_unique<QuadTree>();
 	m_prox = std::make_unique<ProxMap>();
 }
@@ -74,11 +73,10 @@ void PhysicsSystem::checkCollisions()
 			std::set<PhysicsComponent *> checked;
 			for (auto pp : v2)
 			{
-				if (pp->active() && checked.find(pp) == checked.end())
+				if (pp->active() && checked.find(pp) == checked.end() && p->m_momentum.x != 0.0f)
 				{
 					collisionX(p, pp, xm);
 				}
-				checked.insert(pp);
 			}
 
 			// Y
@@ -93,28 +91,12 @@ void PhysicsSystem::checkCollisions()
 			checked.clear();
 			for (auto pp : v2)
 			{
-				if (pp->active() && checked.find(pp) == checked.end())
+				if (pp->active() && checked.find(pp) == checked.end() && p->m_momentum.y != 0.0f)
 				{
 					collisionY(p, pp, ym);
 				}
 				checked.insert(pp);
 			}
-			
-			/*
-			for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
-			{
-				auto pp = AutoList<PhysicsComponent>::get(i);
-				if (p != pp)
-					collisionX(p, pp, xm);
-			}
-
-			for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
-			{
-				auto pp = AutoList<PhysicsComponent>::get(i);
-				if (p != pp)
-					collisionY(p, pp, ym);
-			}
-			*/
 
 			if (m_dragFlag)
 			{
@@ -133,7 +115,6 @@ void PhysicsSystem::checkCollisions()
 			}
 
 			p->getParent()->addPosition(p->momentum().x, p->momentum().y);
-
 		}
 	}
 }
@@ -155,9 +136,9 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 		{
 			float deltaX = 0;
 			if (xStartMomentum > 0)
-				deltaX = (x2 - r1.w) - x1;
+				deltaX = (x2 - r1.w) - x1 - 0.001f;
 			if (xStartMomentum < 0)
-				deltaX = (x2 + r2.w) - x1;
+				deltaX = (x2 + r2.w) - x1 + 0.001f;;
 			p1->getParent()->setPosition(px1 + deltaX, py1);
 			//m_transX = px1 + deltaX;
 			p1->setMomentum(0.0f, p1->m_momentum.y);
@@ -188,11 +169,14 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 			if (yStartMomentum > 0)
 			{
 				deltaY = (y2 - r1.h) - y1;
-				if (deltaY == 0.0f)
+				if (abs(0.0f - deltaY) <= 0.1f)
 					m_dragFlag = true;
+				deltaY -= 0.001f;
 			}
 			if (yStartMomentum < 0)
-				deltaY = (y2 + r2.h) - y1;
+			{
+				deltaY = (y2 + r2.h) - y1 + 0.001f;
+			}
 			p1->getParent()->setPosition(px1, py1 + deltaY);
 			//m_transY = py1 + deltaY;
 			p1->setMomentum(p1->m_momentum.x, 0.0f);
@@ -206,7 +190,10 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 
 bool PhysicsSystem::collide(const GTypes::Rect &r1, const GTypes::Rect &r2)
 {
-	return (r1.x + r1.w > r2.x && r1.x < r2.x + r2.w && r1.y + r1.h > r2.y && r1.y < r2.y + r2.h);
+	return (r1.x + r1.w > r2.x
+		&& r1.x  < r2.x + r2.w
+		&& r1.y + r1.h > r2.y
+		&& r1.y < r2.y + r2.h);
 }
 
 void PhysicsSystem::applyForce(PhysicsComponent *p, float x, float y)
@@ -230,9 +217,4 @@ void PhysicsSystem::onQuadTreeSize(const Events::QuadTreeSize *evnt)
 {
 	m_qtSize.x = evnt->w;
 	m_qtSize.y = evnt->h;
-}
-
-void PhysicsSystem::onProxMapSize(const Events::ProxMapSize * evnt)
-{
-	m_prox->initialize(evnt->w, evnt->h, evnt->cw, evnt->ch);
 }
