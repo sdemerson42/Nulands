@@ -34,6 +34,17 @@ namespace Events
 		float h;
 	};
 
+	struct ProxMapSize : public EventBase
+	{
+		ProxMapSize(float _w, float _h, float _cw, float _ch) :
+			w{ _w }, h{ _h }, cw{ _cw }, ch{ _ch }
+		{}
+		float w;
+		float h;
+		float cw;
+		float ch;
+	};
+
 	
 
 

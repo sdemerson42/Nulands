@@ -21,6 +21,8 @@ NuScene::NuScene(const std::string &fName) :
 	m_factory->createBlueprints("Blueprints.txt");
 	Events::QuadTreeSize qt{ 800, 600 };
 	eventManager.broadcast(&qt);
+	Events::ProxMapSize ps{ 800, 600, 100, 100 };
+	eventManager.broadcast(&ps);
 }
 
 void NuScene::initialize(std::vector<std::shared_ptr<Entity>> &persistentVec, bool fromState)

@@ -7,6 +7,7 @@
 PhysicsSystem::PhysicsSystem()
 {
 	eventManager.registerFunc(this, &PhysicsSystem::onQuadTreeSize);
+	eventManager.registerFunc(this, &PhysicsSystem::onProxMapSize);
 	m_qt = std::make_unique<QuadTree>();
 	m_prox = std::make_unique<ProxMap>();
 }
@@ -229,4 +230,9 @@ void PhysicsSystem::onQuadTreeSize(const Events::QuadTreeSize *evnt)
 {
 	m_qtSize.x = evnt->w;
 	m_qtSize.y = evnt->h;
+}
+
+void PhysicsSystem::onProxMapSize(const Events::ProxMapSize * evnt)
+{
+	m_prox->initialize(evnt->w, evnt->h, evnt->cw, evnt->ch);
 }

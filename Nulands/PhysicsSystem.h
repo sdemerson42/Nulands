@@ -35,5 +35,6 @@ private:
 	float constrainToMax(float);
 	void checkCollisions();
 	void onQuadTreeSize(const Events::QuadTreeSize *evnt);
+	void onProxMapSize(const Events::ProxMapSize *evnt);
 };
 
