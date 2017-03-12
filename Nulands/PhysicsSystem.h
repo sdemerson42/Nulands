@@ -3,17 +3,16 @@
 #include "ISystem.h"
 #include "GTypes.h"
 #include "Events.h"
+#include <memory>
+#include "QuadTree.h"
+#include "ProxMap.h"
 
 class PhysicsComponent;
-class QuadTree;
 
 class PhysicsSystem : public ISystem
 {
 public:
-	PhysicsSystem()
-	{
-		eventManager.registerFunc(this, &PhysicsSystem::onQuadTreeSize);
-	}
+	PhysicsSystem();
 	~PhysicsSystem()
 	{
 		eventManager.unregisterListener(this);
@@ -24,7 +23,8 @@ private:
 	const float m_maxVelocity = 10.0f;
 	const float m_drag = 0.1f;
 	bool m_dragFlag;
-	QuadTree *m_qt;
+	std::unique_ptr<QuadTree> m_qt;
+	std::unique_ptr<ProxMap> m_prox;
 	sf::Vector2f m_qtSize{ 0,0 };
 	void adjustForces(PhysicsComponent *);
 	void applyGravity(PhysicsComponent *);

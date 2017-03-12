@@ -1,8 +1,15 @@
 #include "PhysicsSystem.h"
 #include "PhysicsComponent.h"
 #include "Entity.h"
-#include "QuadTree.h"
 #include <iostream>
+#include <set>
+
+PhysicsSystem::PhysicsSystem()
+{
+	eventManager.registerFunc(this, &PhysicsSystem::onQuadTreeSize);
+	m_qt = std::make_unique<QuadTree>();
+	m_prox = std::make_unique<ProxMap>();
+}
 
 void PhysicsSystem::update()
 {
@@ -29,9 +36,18 @@ void PhysicsSystem::applyGravity(PhysicsComponent *p)
 
 void PhysicsSystem::checkCollisions()
 {
-	m_qt = new QuadTree(0, 0, m_qtSize.x, m_qtSize.y);
+	m_qt->clear();
+	m_prox->clear();
+	m_qt->initialize(0, 0, m_qtSize.x, m_qtSize.y);
+	m_prox->initialize(1600, 1600, 96, 96);
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
-		m_qt->insert(AutoList<PhysicsComponent>::get(i));
+	{
+		auto p = AutoList<PhysicsComponent>::get(i);
+		if (p->isStatic())
+			m_prox->insert(p);
+		else
+			m_qt->insert(p);
+	}
 
 	for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
 	{
@@ -41,20 +57,64 @@ void PhysicsSystem::checkCollisions()
 			float xm = p->m_momentum.x;
 			float ym = p->m_momentum.y;
 			m_dragFlag = false;
-			vector<PhysicsComponent *> v;
-			m_qt->retrieve(v, p);
-			for (auto pp : v)
+			vector<PhysicsComponent *> v1;
+			m_qt->retrieve(v1, p);
+			vector<PhysicsComponent *> v2 = m_prox->retrieve(p);
+			cout << v2.size() << "\n";
+			
+			// X
+			
+			for (auto pp : v1)
 			{
 				if (pp->active())
 				{
-					if (collisionX(p, pp, xm) || collisionY(p, pp, ym))
-					{
-						// Broadcast message
-					}
+					collisionX(p, pp, xm);
 				}
 			}
+			std::set<PhysicsComponent *> checked;
+			for (auto pp : v2)
+			{
+				if (pp->active() && checked.find(pp) == checked.end())
+				{
+					collisionX(p, pp, xm);
+				}
+				checked.insert(pp);
+			}
 
-			p->getParent()->addPosition(p->momentum().x, p->momentum().y);
+			// Y
+
+			for (auto pp : v1)
+			{
+				if (pp->active())
+				{
+					collisionY(p, pp, ym);
+				}
+			}
+			checked.clear();
+			for (auto pp : v2)
+			{
+				if (pp->active() && checked.find(pp) == checked.end())
+				{
+					collisionY(p, pp, ym);
+				}
+				checked.insert(pp);
+			}
+			
+			/*
+			for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
+			{
+				auto pp = AutoList<PhysicsComponent>::get(i);
+				if (p != pp)
+					collisionX(p, pp, xm);
+			}
+
+			for (int i = 0; i < AutoList<PhysicsComponent>::size(); ++i)
+			{
+				auto pp = AutoList<PhysicsComponent>::get(i);
+				if (p != pp)
+					collisionY(p, pp, ym);
+			}
+			*/
 
 			if (m_dragFlag)
 			{
@@ -71,10 +131,12 @@ void PhysicsSystem::checkCollisions()
 				}
 				p->m_momentum.x = uxm;
 			}
+
+			p->getParent()->addPosition(p->momentum().x, p->momentum().y);
+
+			cout << "\n---\n";
 		}
 	}
-
-	delete m_qt;
 }
 
 bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float xStartMomentum)
@@ -85,7 +147,7 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 	float y1 = py1 + p1->m_collisionBox.y;
 	float x2 = p2->getParent()->position().x + p2->m_collisionBox.x;
 	float y2 = p2->getParent()->position().y + p2->m_collisionBox.y;
-	
+
 	GTypes::Rect r1{ x1 + p1->m_momentum.x, y1, p1->m_collisionBox.w, p1->m_collisionBox.h };
 	GTypes::Rect r2{ x2, y2, p2->m_collisionBox.w, p2->m_collisionBox.h };
 	if (collide(r1, r2))
@@ -98,7 +160,9 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 			if (xStartMomentum < 0)
 				deltaX = (x2 + r2.w) - x1;
 			p1->getParent()->setPosition(px1 + deltaX, py1);
+			//m_transX = px1 + deltaX;
 			p1->setMomentum(0.0f, p1->m_momentum.y);
+			cout << "X";
 			return true;
 		}
 	}
@@ -132,12 +196,16 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 			if (yStartMomentum < 0)
 				deltaY = (y2 + r2.h) - y1;
 			p1->getParent()->setPosition(px1, py1 + deltaY);
+			//m_transY = py1 + deltaY;
 			p1->setMomentum(p1->m_momentum.x, 0.0f);
+			cout << "Y";
 			return true;
 		}
 	}
 	return false;
 }
+
+
 
 bool PhysicsSystem::collide(const GTypes::Rect &r1, const GTypes::Rect &r2)
 {
