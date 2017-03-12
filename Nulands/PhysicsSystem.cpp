@@ -60,7 +60,6 @@ void PhysicsSystem::checkCollisions()
 			vector<PhysicsComponent *> v1;
 			m_qt->retrieve(v1, p);
 			vector<PhysicsComponent *> v2 = m_prox->retrieve(p);
-			cout << v2.size() << "\n";
 			
 			// X
 			
@@ -134,7 +133,6 @@ void PhysicsSystem::checkCollisions()
 
 			p->getParent()->addPosition(p->momentum().x, p->momentum().y);
 
-			cout << "\n---\n";
 		}
 	}
 }
@@ -162,7 +160,6 @@ bool PhysicsSystem::collisionX(PhysicsComponent *p1, PhysicsComponent *p2, float
 			p1->getParent()->setPosition(px1 + deltaX, py1);
 			//m_transX = px1 + deltaX;
 			p1->setMomentum(0.0f, p1->m_momentum.y);
-			cout << "X";
 			return true;
 		}
 	}
@@ -198,7 +195,6 @@ bool PhysicsSystem::collisionY(PhysicsComponent *p1, PhysicsComponent *p2, float
 			p1->getParent()->setPosition(px1, py1 + deltaY);
 			//m_transY = py1 + deltaY;
 			p1->setMomentum(p1->m_momentum.x, 0.0f);
-			cout << "Y";
 			return true;
 		}
 	}

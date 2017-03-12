@@ -167,6 +167,7 @@
     <ClCompile Include="ParticleSystem.cpp" />
     <ClCompile Include="PhysicsSystem.cpp" />
     <ClCompile Include="PlayerInputComponent.cpp" />
+    <ClCompile Include="ProxMap.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="TilesComponent.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="PhysicsComponent.h" />
     <ClInclude Include="PhysicsSystem.h" />
     <ClInclude Include="PlayerInputComponent.h" />
+    <ClInclude Include="ProxMap.h" />
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
