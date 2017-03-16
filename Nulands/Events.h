@@ -71,4 +71,20 @@ namespace Events
 		DespawnEvent despawn;
 	};
 
+	// Sound System Events
+
+	enum class SoundEventType
+	{
+		AddSound, AddMusic, PlaySound, PlayMusic, StopSound, StopMusic
+	};
+
+	struct SoundEvent : public EventBase
+	{
+		SoundEventType type;
+		std::string name;
+		std::string fName;
+		bool loop = false;
+		float volume = 100.0f;
+	};
+
 };

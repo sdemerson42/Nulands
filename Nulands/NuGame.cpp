@@ -9,6 +9,7 @@
 #include "ParticleSystem.h"
 #include "SpawnSystem.h"
 #include "DespawnSystem.h"
+#include "SoundSystem.h"
 
 #include "Entity.h"
 #include "EventManager.h"
@@ -19,14 +20,15 @@
 NuGame::NuGame(unsigned int winW, unsigned int winH) :
 	m_window{ sf::VideoMode{ winW, winH }, "NuGame" }, m_sceneIndex{ -1 }
 {
-	m_fixedSystem.push_back(std::make_shared<InputSystem>());
+	m_system.push_back(std::make_shared<InputSystem>());
 	m_system.push_back(std::make_shared<RenderSystem>(&m_window));
 
 	m_fixedSystem.push_back(std::make_shared<PhysicsSystem>());
 	m_fixedSystem.push_back(std::make_shared<AnimatorSystem>());
 	m_fixedSystem.push_back(std::make_shared<CameraSystem>());
 	m_fixedSystem.push_back(std::make_shared<ParticleSystem>());
-	
+	m_fixedSystem.push_back(std::make_shared<SoundSystem>());
+
 	m_fixedSystem.push_back(std::make_shared<DespawnSystem>());
 	m_fixedSystem.push_back(std::make_shared<SpawnSystem>());
 
@@ -69,6 +71,7 @@ void NuGame::update()
 		for (auto &sps : m_system)
 			sps->update();
 	}
+	
 }
 
 void NuGame::selectScene(int scene)

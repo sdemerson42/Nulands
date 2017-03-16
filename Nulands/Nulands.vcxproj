@@ -171,6 +171,7 @@
     <ClCompile Include="ProxMap.cpp" />
     <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
+    <ClCompile Include="SoundSystem.cpp" />
     <ClCompile Include="SpawnSystem.cpp" />
     <ClCompile Include="TilesComponent.cpp" />
   </ItemGroup>
@@ -201,6 +202,7 @@
     <ClInclude Include="QuadTree.h" />
     <ClInclude Include="RenderComponent.h" />
     <ClInclude Include="RenderSystem.h" />
+    <ClInclude Include="SoundSystem.h" />
     <ClInclude Include="SpawnSystem.h" />
     <ClInclude Include="TilesComponent.h" />
   </ItemGroup>
