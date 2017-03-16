@@ -7,6 +7,7 @@
 #include <map>
 #include <fstream>
 #include <sstream>
+#include "Events.h"
 
 class Entity;
 
@@ -27,6 +28,7 @@ public:
 	void createBlueprints(const std::string &fName);
 	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name, float x = 0, float y = 0, bool fromState = false);
 	void createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss);
+	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn);
 private:
 	Blueprint m_blueprint;
 	Blueprint m_stateBlueprint;
@@ -35,6 +37,7 @@ private:
 		if (s == "true") return true;
 		return false;
 	}
+	void buildComponent(Entity *e, const CompData &c);
 	void addRenderC(Entity *e, const std::vector<std::string> &v);
 	void addPhysicsC(Entity *e, const std::vector<std::string> &v);
 	void addCameraC(Entity *e, const std::vector<std::string> &v);

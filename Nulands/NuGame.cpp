@@ -7,8 +7,10 @@
 #include "CameraSystem.h"
 #include "InputSystem.h"
 #include "ParticleSystem.h"
+#include "SpawnSystem.h"
 
 #include "Entity.h"
+#include "EventManager.h"
 
 #include <fstream>
 #include <string>
@@ -16,13 +18,15 @@
 NuGame::NuGame(unsigned int winW, unsigned int winH) :
 	m_window{ sf::VideoMode{ winW, winH }, "NuGame" }, m_sceneIndex{ -1 }
 {
+	m_fixedSystem.push_back(std::make_shared<InputSystem>());
 	m_system.push_back(std::make_shared<RenderSystem>(&m_window));
 
-	m_fixedSystem.push_back(std::make_shared<InputSystem>());
 	m_fixedSystem.push_back(std::make_shared<PhysicsSystem>());
 	m_fixedSystem.push_back(std::make_shared<AnimatorSystem>());
 	m_fixedSystem.push_back(std::make_shared<CameraSystem>());
 	m_fixedSystem.push_back(std::make_shared<ParticleSystem>());
+
+	m_fixedSystem.push_back(std::make_shared<SpawnSystem>());
 
 	makeScenes();
 
@@ -65,11 +69,11 @@ void NuGame::update()
 	}
 }
 
-void NuGame::selectScene(int scene, bool fromState)
+void NuGame::selectScene(int scene)
 {
 	if (m_sceneIndex != -1)
 		m_scene[m_sceneIndex]->close();
 
 	m_sceneIndex = scene;
-	m_scene[m_sceneIndex]->initialize(m_persistentEntity, fromState);
+	m_scene[m_sceneIndex]->initialize(m_persistentEntity);
 }

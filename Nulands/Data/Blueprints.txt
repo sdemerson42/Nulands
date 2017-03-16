@@ -1,11 +1,11 @@
 {
-Bak
-{ Render Squares.png 64 0 32 32 }
+Map
+{ Tiles Tileset.txt }
 }
 
 {
-Map
-{ Tiles Tileset.txt }
+Map2
+{ Tiles Tileset1.txt }
 }
 
 {

@@ -113,14 +113,12 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 
 	for (auto &c : p->second)
 	{
-		if (c.type == "Render") addRenderC(e, c.args);
-		if (c.type == "Physics") addPhysicsC(e, c.args);
-		if (c.type == "Animator") addAnimatorC(e, c.args);
-		if (c.type == "Animation") addAnimation(e, c.args);
-		if (c.type == "Tiles") addTilesC(e, c.args);
-		if (c.type == "Camera") addCameraC(e, c.args);
-		if (c.type == "Particle") addParticle(e, c.args);
-		if (c.type == "PlayerInput") addPlayerInput(e, c.args);
+		buildComponent(e, c);
+		if (fromState)
+		{
+			x = c.x;
+			y = c.y;
+		}
 	}
 
 	e->setPosition(x, y);
@@ -129,12 +127,36 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss)
 {
 	m_stateBlueprint.clear();
+	ss.clear(ios_base::goodbit);
 	while (ss)
 		ss >> m_stateBlueprint;
 	for (auto &p : m_stateBlueprint)
-		for (auto &c : p.second)
-			createEntity(v, p.first, c.x, c.y, true);
+		createEntity(v, p.first, 0.0f, 0.0f, true);
 }
+
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn)
+{
+	v.push_back(std::make_shared<Entity>());
+	auto e = v[v.size() - 1].get();
+	auto p = m_blueprint.find(spawn.bName);
+	for (auto &c : p->second)
+		buildComponent(e, c);
+	e->setPersist(spawn.persist);
+	e->setPosition(spawn.x, spawn.y);
+}
+
+void Factory::buildComponent(Entity *e, const CompData &c)
+{
+	if (c.type == "Render") addRenderC(e, c.args);
+	if (c.type == "Physics") addPhysicsC(e, c.args);
+	if (c.type == "Animator") addAnimatorC(e, c.args);
+	if (c.type == "Animation") addAnimation(e, c.args);
+	if (c.type == "Tiles") addTilesC(e, c.args);
+	if (c.type == "Camera") addCameraC(e, c.args);
+	if (c.type == "Particle") addParticle(e, c.args);
+	if (c.type == "PlayerInput") addPlayerInput(e, c.args);
+}
+
 
 
 

@@ -4,18 +4,24 @@
 #include <memory>
 #include <string>
 #include <sstream>
+#include "Events.h"
 
 #include "SFML\Graphics.hpp"
+#include "EventManager.h"
 
 class Entity;
 class ISystem;
 class Factory;
 
-class NuScene
+class NuScene : public EventHandler
 {
 public:
 	NuScene(const std::string &fName);
-	void initialize(std::vector<std::shared_ptr<Entity>> &persistentVec, bool fromState = false);
+	virtual ~NuScene()
+	{
+		eventManager.unregisterListener(this);
+	}
+	void initialize(std::vector<std::shared_ptr<Entity>> &persistentVec);
 	void close();
 private:
 	void initFromFile(std::vector<std::shared_ptr<Entity>> &persistentVec);
@@ -25,4 +31,6 @@ private:
 	sf::RenderWindow *m_window;
 	std::string m_dataFName;
 	std::stringstream m_stateImage;
+	bool m_activeScene;
+	void onInstantiate(const Events::Instantiate *evnt);
 };

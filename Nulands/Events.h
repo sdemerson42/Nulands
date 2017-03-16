@@ -45,7 +45,17 @@ namespace Events
 		float ch;
 	};
 
-	
+	struct SpawnEvent : public EventBase
+	{
+		std::string bName;
+		float x;
+		float y;
+		bool persist = false;
+	};
 
+	struct Instantiate : public EventBase
+	{
+		SpawnEvent spawn;
+	};
 
 };

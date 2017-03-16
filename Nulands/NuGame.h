@@ -14,7 +14,7 @@ public:
 	NuGame(unsigned int winW, unsigned int winH);
 	void update();
 	void makeScenes();
-	void selectScene(int scene, bool fromState = false);
+	void selectScene(int scene);
 private:
 	std::vector<std::shared_ptr<ISystem>> m_system;
 	std::vector<std::shared_ptr<ISystem>> m_fixedSystem;
