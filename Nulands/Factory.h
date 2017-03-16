@@ -11,8 +11,6 @@
 
 class Entity;
 
-
-
 class Factory
 {
 public:
@@ -37,12 +35,12 @@ private:
 		if (s == "true") return true;
 		return false;
 	}
-	void buildComponent(Entity *e, const CompData &c);
+	void buildComponent(Entity *e, const CompData &c, std::vector<std::shared_ptr<Entity>> &ev);
 	void addRenderC(Entity *e, const std::vector<std::string> &v);
 	void addPhysicsC(Entity *e, const std::vector<std::string> &v);
 	void addCameraC(Entity *e, const std::vector<std::string> &v);
 	void addAnimatorC(Entity *e, const std::vector<std::string> &v);
-	void addTilesC(Entity *e, const std::vector<std::string> &v);
+	void addTilesC(Entity *e, const std::vector<std::string> &v, std::vector<std::shared_ptr<Entity>> &ev);
 	void addAnimation(Entity *e, const std::vector<std::string> &v);
 	void addParticle(Entity *e, const std::vector<std::string> &v);
 	void addPlayerInput(Entity *e, const std::vector<std::string> &v);

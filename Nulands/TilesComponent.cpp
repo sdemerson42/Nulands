@@ -2,6 +2,7 @@
 #include "RenderComponent.h"
 #include "PhysicsComponent.h"
 #include "Entity.h"
+#include "Factory.h"
 
 #include <fstream>
 
@@ -37,7 +38,7 @@ std::istream& operator >> (std::istream& ist, TilesComponent::Tile & t)
 	return ist;
 }
 
-TilesComponent::TilesComponent(Entity *parent, const std::string &fName) :
+TilesComponent::TilesComponent(Entity *parent, const std::string &fName, std::vector<std::shared_ptr<Entity>> &eVec) :
 	IComponent{ parent }
 {
 	std::ifstream ifs{ "Data\\" + fName };
@@ -50,8 +51,8 @@ TilesComponent::TilesComponent(Entity *parent, const std::string &fName) :
 		Tile t;
 		ifs >> t;
 		if (!ifs) return;
-		m_entVec.push_back(std::make_shared<Entity>());
-		Entity *p = m_entVec[m_entVec.size() - 1].get();
+		eVec.push_back(std::make_shared<Entity>());
+		Entity *p = eVec[eVec.size() - 1].get();
 		p->setPosition(t.posRect.x, t.posRect.y);
 		p->addComponent<RenderComponent>(p, texFName, t.texRect.x, t.texRect.y, t.texRect.w, t.texRect.h);
 		if (t.solid)
@@ -63,7 +64,9 @@ TilesComponent::TilesComponent(Entity *parent, const std::string &fName) :
 
 void TilesComponent::outState(std::ostream &ost) const
 {
+	/*
 	for (auto &sp : m_entVec)
 		sp->outState(ost);
+		*/
 }
 

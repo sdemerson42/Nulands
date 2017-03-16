@@ -1,7 +1,9 @@
 #pragma once
 
 #include "EventBase.h"
+#include "GTypes.h"
 #include "SFML\Graphics.hpp"
+#include <vector>
 
 class Particle;
 
@@ -24,6 +26,7 @@ namespace Events
 	};
 
 	// System Events
+
 
 	struct QuadTreeSize : public EventBase
 	{
@@ -56,6 +59,16 @@ namespace Events
 	struct Instantiate : public EventBase
 	{
 		SpawnEvent spawn;
+	};
+
+	struct DespawnEvent : public EventBase
+	{
+		GTypes::EntityGuid guid;
+	};
+
+	struct Destroy : public EventBase
+	{
+		DespawnEvent despawn;
 	};
 
 };

@@ -33,4 +33,5 @@ private:
 	std::stringstream m_stateImage;
 	bool m_activeScene;
 	void onInstantiate(const Events::Instantiate *evnt);
+	void onDestroy(const Events::Destroy *evnt);
 };

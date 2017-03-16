@@ -8,6 +8,7 @@
 #include "InputSystem.h"
 #include "ParticleSystem.h"
 #include "SpawnSystem.h"
+#include "DespawnSystem.h"
 
 #include "Entity.h"
 #include "EventManager.h"
@@ -25,7 +26,8 @@ NuGame::NuGame(unsigned int winW, unsigned int winH) :
 	m_fixedSystem.push_back(std::make_shared<AnimatorSystem>());
 	m_fixedSystem.push_back(std::make_shared<CameraSystem>());
 	m_fixedSystem.push_back(std::make_shared<ParticleSystem>());
-
+	
+	m_fixedSystem.push_back(std::make_shared<DespawnSystem>());
 	m_fixedSystem.push_back(std::make_shared<SpawnSystem>());
 
 	makeScenes();

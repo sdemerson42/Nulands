@@ -13,12 +13,14 @@
 #include "Entity.h"
 #include "SFML\System.hpp"
 #include <iostream>
+#include <algorithm>
 
 NuScene::NuScene(const std::string &fName) :
 	m_dataFName{ fName }
 {
 
 	eventManager.registerFunc(this, &NuScene::onInstantiate);
+	eventManager.registerFunc(this, &NuScene::onDestroy);
 
 	m_factory = make_shared<Factory>();
 	m_factory->createBlueprints("Blueprints.txt");
@@ -26,6 +28,7 @@ NuScene::NuScene(const std::string &fName) :
 	eventManager.broadcast(&qt);
 	Events::ProxMapSize ps{ 1600, 1600, 96, 96 };
 	eventManager.broadcast(&ps);
+	m_activeScene = false;
 }
 
 void NuScene::initialize(std::vector<std::shared_ptr<Entity>> &persistentVec)
@@ -77,7 +80,6 @@ void NuScene::close()
 
 	for (auto &sp : m_entityVec)
 		sp->outState(m_stateImage);
-	
 	m_entityVec.clear();
 	m_activeScene = false;
 }
@@ -87,5 +89,18 @@ void NuScene::onInstantiate(const Events::Instantiate *evnt)
 	if (m_activeScene)
 	{
 		m_factory->createEntity(m_entityVec, evnt->spawn);
+	}
+}
+
+void NuScene::onDestroy(const Events::Destroy *evnt)
+{
+	if (m_activeScene)
+	{
+		GTypes::EntityGuid guid = evnt->despawn.guid;
+		auto i = std::find_if(m_entityVec.begin(), m_entityVec.end(), [guid](std::shared_ptr<Entity> &sp) {
+			return sp->guid() == guid;
+		});
+		if (i != m_entityVec.end())
+			m_entityVec.erase(i);
 	}
 }

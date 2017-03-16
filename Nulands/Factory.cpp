@@ -113,7 +113,7 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 
 	for (auto &c : p->second)
 	{
-		buildComponent(e, c);
+		buildComponent(e, c, v);
 		if (fromState)
 		{
 			x = c.x;
@@ -140,18 +140,18 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events
 	auto e = v[v.size() - 1].get();
 	auto p = m_blueprint.find(spawn.bName);
 	for (auto &c : p->second)
-		buildComponent(e, c);
+		buildComponent(e, c, v);
 	e->setPersist(spawn.persist);
 	e->setPosition(spawn.x, spawn.y);
 }
 
-void Factory::buildComponent(Entity *e, const CompData &c)
+void Factory::buildComponent(Entity *e, const CompData &c, std::vector<std::shared_ptr<Entity>> &v)
 {
 	if (c.type == "Render") addRenderC(e, c.args);
 	if (c.type == "Physics") addPhysicsC(e, c.args);
 	if (c.type == "Animator") addAnimatorC(e, c.args);
 	if (c.type == "Animation") addAnimation(e, c.args);
-	if (c.type == "Tiles") addTilesC(e, c.args);
+	if (c.type == "Tiles") addTilesC(e, c.args, v);
 	if (c.type == "Camera") addCameraC(e, c.args);
 	if (c.type == "Particle") addParticle(e, c.args);
 	if (c.type == "PlayerInput") addPlayerInput(e, c.args);
@@ -204,9 +204,9 @@ void Factory::addAnimation(Entity *e, const std::vector<std::string> &v)
 	a->addAnimation(AnimatorComponent::Animation{ name, av, speed, loop });
 }
 
-void Factory::addTilesC(Entity *e, const std::vector<std::string> &v)
+void Factory::addTilesC(Entity *e, const std::vector<std::string> &v, std::vector<std::shared_ptr<Entity>> &ev)
 {
-	e->addComponent<TilesComponent>(e, v[0]);
+	TilesComponent tc(e, v[0], ev);
 }
 
 void Factory::addPlayerInput(Entity *e, const std::vector<std::string> &v)

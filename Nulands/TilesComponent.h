@@ -11,7 +11,7 @@ class Entity;
 class TilesComponent : public IComponent
 {
 public:
-	TilesComponent(Entity *parent, const std::string &fName);
+	TilesComponent(Entity *parent, const std::string &fName, std::vector<std::shared_ptr<Entity>> &eVec);
 	struct Tile
 	{
 		GTypes::Rect texRect;
@@ -21,6 +21,4 @@ public:
 	void update() override
 	{}
 	void outState(std::ostream &ost) const override;
-private:
-	std::vector<std::shared_ptr<Entity>> m_entVec;
 };

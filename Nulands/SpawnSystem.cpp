@@ -7,7 +7,7 @@ void SpawnSystem::onSpawnEvent(const Events::SpawnEvent *evnt)
 
 void SpawnSystem::update()
 {
-	for (auto e : m_spawnEvent)
+	for (auto &e : m_spawnEvent)
 	{
 		Events::Instantiate inst;
 		inst.spawn = e;
