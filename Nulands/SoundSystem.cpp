@@ -38,7 +38,7 @@ void SoundSystem::onSoundEvent(const Events::SoundEvent *evnt)
 		channel->play();
 
 		++m_channelIndex;
-		if (m_channelIndex > m_channelMax) m_channelIndex = 0;
+		if (m_channelIndex == m_channelMax) m_channelIndex = 0;
 	}
 	if (*t == Events::SoundEventType::StopMusic)
 	{
@@ -52,6 +52,7 @@ void SoundSystem::onSoundEvent(const Events::SoundEvent *evnt)
 			if (c.getBuffer() == compare)
 			{
 				c.stop();
+				c.resetBuffer();
 				break;
 			}
 		}
