@@ -7,6 +7,7 @@
 #include "TilesComponent.h"
 #include "ParticleComponent.h"
 #include "PlayerInputComponent.h"
+#include "BehaviorComponent.h"
 
 std::istream &operator >> (std::istream &ist, Factory::CompData & cd)
 {
@@ -155,6 +156,7 @@ void Factory::buildComponent(Entity *e, const CompData &c, std::vector<std::shar
 	if (c.type == "Camera") addCameraC(e, c.args);
 	if (c.type == "Particle") addParticle(e, c.args);
 	if (c.type == "PlayerInput") addPlayerInput(e, c.args);
+	if (c.type == "Behavior") addBehavior(e, c.args);
 }
 
 
@@ -212,4 +214,15 @@ void Factory::addTilesC(Entity *e, const std::vector<std::string> &v, std::vecto
 void Factory::addPlayerInput(Entity *e, const std::vector<std::string> &v)
 {
 	e->addComponent<PlayerInputComponent>(e);
+}
+
+void Factory::addBehavior(Entity *e, const std::vector<std::string> &v)
+{
+	e->addComponent<BehaviorComponent>(e);
+	auto b = e->getComponent<BehaviorComponent>();
+	int tot = stoi(v[0]);
+	for (int i = 1; i < tot + 1; ++i)
+	{
+		b->addBehaviorByTag(v[i], b);
+	}
 }

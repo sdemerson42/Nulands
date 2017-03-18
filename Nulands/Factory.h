@@ -44,6 +44,7 @@ private:
 	void addAnimation(Entity *e, const std::vector<std::string> &v);
 	void addParticle(Entity *e, const std::vector<std::string> &v);
 	void addPlayerInput(Entity *e, const std::vector<std::string> &v);
+	void addBehavior(Entity *e, const std::vector<std::string> &v);
 };
 
 

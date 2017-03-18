@@ -153,6 +153,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AnimatorSystem.cpp" />
+    <ClCompile Include="BehaviorComponent.cpp" />
+    <ClCompile Include="BehaviorSystem.cpp" />
     <ClCompile Include="CameraComponent.cpp" />
     <ClCompile Include="CameraSystem.cpp" />
     <ClCompile Include="DespawnSystem.cpp" />
@@ -179,6 +181,8 @@
     <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="AnimatorSystem.h" />
     <ClInclude Include="AutoList.h" />
+    <ClInclude Include="BehaviorComponent.h" />
+    <ClInclude Include="BehaviorSystem.h" />
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraSystem.h" />
     <ClInclude Include="DespawnSystem.h" />
@@ -188,6 +192,7 @@
     <ClInclude Include="Events.h" />
     <ClInclude Include="Factory.h" />
     <ClInclude Include="GTypes.h" />
+    <ClInclude Include="IBehavior.h" />
     <ClInclude Include="IComponent.h" />
     <ClInclude Include="InputSystem.h" />
     <ClInclude Include="ISystem.h" />

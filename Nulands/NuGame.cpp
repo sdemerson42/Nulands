@@ -10,6 +10,7 @@
 #include "SpawnSystem.h"
 #include "DespawnSystem.h"
 #include "SoundSystem.h"
+#include "BehaviorSystem.h"
 
 #include "Entity.h"
 #include "EventManager.h"
@@ -23,6 +24,7 @@ NuGame::NuGame(unsigned int winW, unsigned int winH) :
 	m_system.push_back(std::make_shared<InputSystem>());
 	m_system.push_back(std::make_shared<RenderSystem>(&m_window));
 
+	m_fixedSystem.push_back(std::make_shared<BehaviorSystem>());
 	m_fixedSystem.push_back(std::make_shared<PhysicsSystem>());
 	m_fixedSystem.push_back(std::make_shared<AnimatorSystem>());
 	m_fixedSystem.push_back(std::make_shared<CameraSystem>());
