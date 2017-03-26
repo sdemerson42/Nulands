@@ -29,8 +29,8 @@ public:
 	using Blueprint = std::map<std::string, std::vector<CompData>>;
 	void createBlueprints(const std::string &fName);
 	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name, float x = 0, float y = 0, bool fromState = false);
-	//void createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss);
-	//void createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn);
+	void createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss);
+	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn);
 	static std::map<std::string, CMType> *getMap()
 	{
 		if (m_makerMap == nullptr) m_makerMap = new std::map<std::string, CMType>;

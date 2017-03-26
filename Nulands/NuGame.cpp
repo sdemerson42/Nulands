@@ -52,6 +52,7 @@ void NuGame::makeScenes()
 
 void NuGame::update()
 {
+	
 	while (m_window.isOpen())
 	{
 

@@ -120,7 +120,12 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 		if (cm != m_makerMap->end())
 		{
 			e->m_component.push_back(shared_ptr<IComponent>(cm->second( e )));
+			// Hack for Tilesets... Temporary
+			auto t = e->getComponent<TilesComponent>();
+			if (t != nullptr)
+				t->m_vecRef = &v;
 			e->m_component[e->m_component.size() - 1]->initialize(c.args);
+			
 			if (fromState)
 			{
 				x = c.x;
@@ -130,5 +135,37 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::s
 	}
 
 	e->setPosition(x, y);
+}
+
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss)
+{
+	m_stateBlueprint.clear();
+	ss.clear(ios_base::goodbit);
+	while (ss)
+		ss >> m_stateBlueprint;
+	for (auto &p : m_stateBlueprint)
+		createEntity(v, p.first, 0.0f, 0.0f, true);
+}
+
+void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn)
+{
+	v.push_back(std::make_shared<Entity>());
+	auto e = v[v.size() - 1].get();
+	auto p = m_blueprint.find(spawn.bName);
+	for (auto &c : p->second)
+	{
+		auto cm = m_makerMap->find(c.type);
+		if (cm != m_makerMap->end())
+		{
+			e->m_component.push_back(shared_ptr<IComponent>(cm->second(e)));
+			// Hack for Tilesets... Temporary
+			auto t = e->getComponent<TilesComponent>();
+			if (t != nullptr)
+				t->m_vecRef = &v;
+			e->m_component[e->m_component.size() - 1]->initialize(c.args);
+		}
+	}
+	e->setPersist(spawn.persist);
+	e->setPosition(spawn.x, spawn.y);
 }
 

@@ -69,7 +69,7 @@ void NuScene::initFromFile(std::vector<std::shared_ptr<Entity>> &persistentVec)
 
 void NuScene::initFromState()
 {
-	//m_factory->createEntity(m_entityVec, m_stateImage);
+	m_factory->createEntity(m_entityVec, m_stateImage);
 }
 
 void NuScene::close()
@@ -88,7 +88,7 @@ void NuScene::onInstantiate(const Events::Instantiate *evnt)
 {
 	if (m_activeScene)
 	{
-		//m_factory->createEntity(m_entityVec, evnt->spawn);
+		m_factory->createEntity(m_entityVec, evnt->spawn);
 	}
 }
 

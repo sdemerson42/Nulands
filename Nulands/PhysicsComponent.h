@@ -16,6 +16,9 @@ public:
 	PhysicsComponent(Entity *parent) :
 		IComponent{ parent }
 	{}
+	PhysicsComponent(Entity *parent, float x, float y, float w, float h, bool gravity, bool solid, bool isStatic, float mx = 0.0f, float my = 0.0f) :
+		IComponent{ parent }, m_collisionBox{ x,y,w,h }, m_usesGravity{ gravity }, m_solid{ solid }, m_static{ isStatic }, m_momentum{ mx, my }
+	{}
 	void initialize(const std::vector<std::string> &args) override
 	{
 		m_collisionBox.x = stof(args[0]);
@@ -58,7 +61,8 @@ public:
 	void outState(std::ostream &ost) const override
 	{
 		ost << "{ Physics " << " " << m_collisionBox.x << " " << m_collisionBox.y << " " << m_collisionBox.w << " " << m_collisionBox.h << " " <<
-			(m_usesGravity ? "true" : "false") << " " << (m_solid ? "true" : "false") << " " << (m_static ? "true" : "false") << " }\n";
+			(m_usesGravity ? "true" : "false") << " " << (m_solid ? "true" : "false") << " " << (m_static ? "true" : "false") <<  " " <<
+			m_momentum.x << " " << m_momentum.y << " }\n";
 	}
 private:
 	GTypes::Rect m_collisionBox;
