@@ -1,6 +1,8 @@
 #include "ParticleComponent.h"
 #include "Entity.h"
 
+FactoryRegistry<ParticleComponent> ParticleComponent::m_fReg{ "Particle" };
+
 void ParticleComponent::Particle::update()
 {
 	entity->addPosition(mx, my);

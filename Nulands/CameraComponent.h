@@ -4,6 +4,7 @@
 #include "AutoList.h"
 #include "SFML\Graphics.hpp"
 #include "GTypes.h"
+#include "Factory.h"
 
 class CameraSystem;
 class RenderSystem;
@@ -14,8 +15,10 @@ class CameraComponent : public IComponent, public AutoList<CameraComponent>
 public:
 	friend CameraSystem;
 	friend RenderSystem;
-	CameraComponent(Entity *parent, float vx, float vy, float vw, float vh, float vpx, float vpy, float vxr, float vyr,
-		float offsetX, float offsetY, float trackDistance);
+	CameraComponent(Entity *parent) :
+		IComponent{ parent }
+	{}
+	void initialize(const std::vector<std::string> &args) override;
 	void update() override
 	{}
 	void outState(std::ostream &ost) const override
@@ -29,4 +32,5 @@ private:
 	sf::View m_view;
 	float m_trackDistance;
 	sf::Vector2f m_offset;
+	static FactoryRegistry<CameraComponent> m_fReg;
 };

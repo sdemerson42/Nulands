@@ -7,6 +7,7 @@
 #include <typeindex>
 #include <algorithm>
 #include <string>
+#include "Factory.h"
 
 class IBehavior;
 
@@ -16,6 +17,7 @@ public:
 	BehaviorComponent(Entity *parent) :
 		IComponent{ parent }
 	{}
+	void initialize(const std::vector<std::string> &args) override;
 	void update() override;
 	void outState(std::ostream &ost) const override;
 	template<typename B, typename ...Args>
@@ -38,4 +40,5 @@ public:
 	void removeBehaviorByTag(const std::string &tag);
 private:
 	std::vector<std::shared_ptr<IBehavior>> m_behavior;
+	static FactoryRegistry<BehaviorComponent> m_fReg;
 };

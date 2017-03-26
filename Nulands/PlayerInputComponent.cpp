@@ -3,6 +3,8 @@
 #include "PhysicsComponent.h"
 #include "AnimatorComponent.h"
 
+FactoryRegistry<PlayerInputComponent> PlayerInputComponent::m_fReg{ "PlayerInput" };
+
 PlayerInputComponent::PlayerInputComponent(Entity *parent) :
 	IComponent{ parent }
 {

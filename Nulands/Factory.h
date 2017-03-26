@@ -10,6 +10,10 @@
 #include "Events.h"
 
 class Entity;
+class IComponent;
+
+
+using CMType = IComponent *(*)(Entity *);
 
 class Factory
 {
@@ -25,8 +29,13 @@ public:
 	using Blueprint = std::map<std::string, std::vector<CompData>>;
 	void createBlueprints(const std::string &fName);
 	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const std::string &name, float x = 0, float y = 0, bool fromState = false);
-	void createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss);
-	void createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn);
+	//void createEntity(std::vector<std::shared_ptr<Entity>> &v, std::stringstream &ss);
+	//void createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events::SpawnEvent &spawn);
+	static std::map<std::string, CMType> *getMap()
+	{
+		if (m_makerMap == nullptr) m_makerMap = new std::map<std::string, CMType>;
+		return m_makerMap;
+	}
 private:
 	Blueprint m_blueprint;
 	Blueprint m_stateBlueprint;
@@ -35,16 +44,17 @@ private:
 		if (s == "true") return true;
 		return false;
 	}
-	void buildComponent(Entity *e, const CompData &c, std::vector<std::shared_ptr<Entity>> &ev);
-	void addRenderC(Entity *e, const std::vector<std::string> &v);
-	void addPhysicsC(Entity *e, const std::vector<std::string> &v);
-	void addCameraC(Entity *e, const std::vector<std::string> &v);
-	void addAnimatorC(Entity *e, const std::vector<std::string> &v);
-	void addTilesC(Entity *e, const std::vector<std::string> &v, std::vector<std::shared_ptr<Entity>> &ev);
-	void addAnimation(Entity *e, const std::vector<std::string> &v);
-	void addParticle(Entity *e, const std::vector<std::string> &v);
-	void addPlayerInput(Entity *e, const std::vector<std::string> &v);
-	void addBehavior(Entity *e, const std::vector<std::string> &v);
+	static std::map<std::string, CMType> *m_makerMap;
+};
+
+template<typename T>
+class FactoryRegistry: public Factory
+{
+public:
+	FactoryRegistry(const std::string &s)
+	{
+		getMap()->insert(std::make_pair(s, &makeComponent<T>));
+	}
 };
 
 

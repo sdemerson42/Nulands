@@ -6,6 +6,7 @@
 #include "IComponent.h"
 #include "GTypes.h"
 #include "AutoList.h"
+#include "Factory.h"
 
 class AnimatorSystem;
 
@@ -21,6 +22,8 @@ public:
 	
 	struct Animation
 	{
+		Animation()
+		{}
 		Animation(const std::string &_name, std::vector<float> _rectVals, int _speed, bool _loop = true) :
 			name{ _name }, speed{ _speed }, loop{ _loop }
 		{
@@ -60,17 +63,41 @@ public:
 	{
 		m_animIndex = m_animation.end();
 	}
+	void initialize(const vector<string> &args) override
+	{
+		int animTotal = stoi(args[0]);
+		int q = 1;
+		for (int i = 0; i < animTotal; ++i)
+		{
+			Animation a;
+			a.name = args[q];
+			++q;
+			int frameTotal = stoi(args[q]);
+			++q;
+			for (int j = 0; j < frameTotal; ++j)
+			{
+				a.frame.push_back(GTypes::Rect{ stof(args[q]), stof(args[q + 1]), stof(args[q + 2]), stof(args[q + 3]) });
+				q += 4;
+			}
+			a.speed = stoi(args[q]);
+			++q;
+			if (args[q] == "true") a.loop = true;
+			else a.loop = false;
+			++q;
+			addAnimation(a);
+		}
+	}
 	void outState(std::ostream &ost) const override
 	{
-		ost << "{ Animator }\n";
+		ost << "{ Animator " << m_animation.size() << " ";
 		for (auto &a : m_animation)
 		{
-			ost << "{ Animation " << a.name << " " << a.frame.size() << " ";
+			ost << a.name << " " << a.frame.size() << " ";
 			for (auto f : a.frame)
 				ost << f.x << " " << f.y << " " << f.w << " " << f.h << " ";
-			ost << a.speed << " " << (a.loop ? "true" : "false") << " }\n";
+			ost << a.speed << " " << (a.loop ? "true" : "false") << "\n";
 		}
-	
+		ost << "}\n";
 	}
 private:
 	std::vector<Animation> m_animation;
@@ -78,4 +105,5 @@ private:
 	int m_frameIndex;
 	int m_counter;
 	bool m_animating;
+	static FactoryRegistry<AnimatorComponent> m_fReg;
 };

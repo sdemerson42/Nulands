@@ -2,6 +2,14 @@
 #include "IBehavior.h"
 #include <algorithm>
 
+FactoryRegistry<BehaviorComponent> BehaviorComponent::m_fReg{ "Behavior" };
+
+void BehaviorComponent::initialize(const std::vector<std::string> &args)
+{
+	for (auto &s : args)
+		addBehaviorByTag(s, this);
+}
+
 void BehaviorComponent::update()
 {
 	for (auto &sp : m_behavior)

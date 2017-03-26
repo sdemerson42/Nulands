@@ -13,6 +13,7 @@
 class Entity: public EventHandler, public AutoList<Entity>
 {
 public:
+	friend class Factory;
 	Entity()
 	{
 		m_guid = m_guidCounter;

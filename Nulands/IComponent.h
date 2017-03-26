@@ -2,7 +2,8 @@
 
 #include "EventManager.h"
 #include "AutoList.h"
-
+#include <vector>
+#include <string>
 
 class Entity;
 
@@ -13,6 +14,8 @@ public:
 		m_parentEntity{ parent }
 	{}
 	virtual ~IComponent()
+	{}
+	virtual void initialize(const std::vector<string> &)
 	{}
 	virtual void update() = 0;
 	Entity *getParent() const
@@ -34,3 +37,9 @@ private:
 };
 
 std::ostream &operator << (std::ostream &ost, const IComponent &c);
+
+template<typename T>
+IComponent *makeComponent(Entity *e)
+{
+	return new T{ e };
+}

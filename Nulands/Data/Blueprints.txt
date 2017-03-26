@@ -11,18 +11,19 @@ Map2
 {
 Player
 { Render Player.png 0 0 32 32 }
-{ Physics 2 2 28 28 true true false }
-{ Animator }
-{ Animation right 4 32 0 32 32 64 0 32 32 96 0 32 32 64 0 32 32 10 true }
-{ Animation left 4 128 0 32 32 160 0 32 32 192 0 32 32 160 0 32 32 10 true }
-{ Animation idleright 1 0 0 32 32 1 false }
-{ Animation idleleft 1 224 0 32 32 1 false }
+{ Physics 2 2 28 28 true true false 0 0 }
+{ Animator 4
+right 4 32 0 32 32 64 0 32 32 96 0 32 32 64 0 32 32 10 true
+left 4 128 0 32 32 160 0 32 32 192 0 32 32 160 0 32 32 10 true
+idleright 1 0 0 32 32 1 false 
+idleleft 1 224 0 32 32 1 false
+} 
 { Camera 0 0 800 600 0 0 1 1 16 16 100 }
-{ Particle 10 25 12 2 10 6.0 2.0 0.0 2.0 Player.png 256 0 3 3 0 1 }
+{ Particle 10 25 12 2 directional 10 6.0 2.0 0.0 2.0 Player.png 256 0 3 3 0 1 }
 { PlayerInput }
 }
 
 {
 Snow
-{ Particle 0 -10 1600 10 450 4.0 0.3 0.0 2.0 Squares.png 100 100 2 2 0.4 3.0 }
+{ Particle 0 -10 1600 10 directional 450 4.0 0.3 0.0 2.0 Squares.png 100 100 2 2 0.4 3.0 }
 }
