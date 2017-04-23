@@ -15,6 +15,7 @@ namespace Events
 	struct InputWrapper
 	{
 		float x;
+		float y;
 	};
 
 	struct InputEvent : public EventBase
@@ -54,6 +55,7 @@ namespace Events
 		float x;
 		float y;
 		bool persist = false;
+		std::vector<std::string> init;
 	};
 
 	struct Instantiate : public EventBase

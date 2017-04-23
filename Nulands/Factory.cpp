@@ -162,7 +162,10 @@ void Factory::createEntity(std::vector<std::shared_ptr<Entity>> &v, const Events
 			auto t = e->getComponent<TilesComponent>();
 			if (t != nullptr)
 				t->m_vecRef = &v;
-			e->m_component[e->m_component.size() - 1]->initialize(c.args);
+			if (c.args.size() > 0 && c.args[0] == "*")
+				e->m_component[e->m_component.size() - 1]->initialize(spawn.init);
+			else
+				e->m_component[e->m_component.size() - 1]->initialize(c.args);
 		}
 	}
 	e->setPersist(spawn.persist);
